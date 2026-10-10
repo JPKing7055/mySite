@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>是結果重要，還是過程重要？ | 部落格</title>
+<meta name="description" content="接續曾經提到的AI發展議題，這次就來討論下，所謂的創作，到底是結果重要，還是過程重要？ 其實這個議題沒有所謂的標準答案，因為不同的對象有不同的需求，所以就會有不…">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class' }</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; } .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.post-body { font-size: 1.08rem; line-height: 2; }
+.post-body p { margin: 0 0 1.4em; overflow-wrap: anywhere; }
+.post-body h2, .post-body h3, .post-body h4 { font-weight: 700; margin: 2em 0 .8em; color: inherit; }
+.post-body h2 { font-size: 1.5rem; } .post-body h3 { font-size: 1.25rem; }
+.post-body ul, .post-body ol { margin: 0 0 1.4em 1.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+.post-body li { margin: .3em 0; }
+.post-body a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.post-body hr { margin: 2em 0; border-color: rgba(148,163,184,.4); }
+.post-body blockquote { border-left: 3px solid #38bdf8; padding-left: 1em; margin: 0 0 1.4em; opacity: .85; }
+.post-body .note { font-size: .875rem; opacity: .6; border-top: 1px dashed rgba(148,163,184,.5); padding-top: 1em; margin-top: 2em; }
+</style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white relative bg-slate-50 text-slate-700 dark:bg-[#0f172a] dark:text-slate-300 transition-colors duration-500">
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-sky-400/20 dark:bg-sky-600/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+</div>
+<header class="fixed w-full top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-6xl mx-auto px-6 lg:px-8"><div class="flex items-center justify-between h-16">
+<a href="../../index.html" class="font-bold text-xl tracking-wider text-slate-900 dark:text-white">PORTFOLIO<span class="text-sky-500 dark:text-sky-400">.</span></a>
+<nav><ul class="flex space-x-6 md:space-x-8 text-sm font-medium">
+<li><a href="../../index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
+<li><a href="../../blog/index.html" class="text-sky-600 dark:text-sky-400">部落格</a></li>
+</ul></nav>
+</div></div></header>
+<button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-300 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-all focus:outline-none group" title="切換深淺色">
+<i class="fas fa-sun text-xl block dark:hidden"></i><i class="fas fa-moon text-xl hidden dark:block"></i>
+</button>
+<main class="max-w-3xl mx-auto px-6 pt-28">
+<a href="../index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回部落格</a>
+<article class="mt-6">
+<div class="flex flex-wrap items-center gap-3 mb-3 text-sm text-slate-500 dark:text-slate-400"><time>2023-02-05</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">碎碎唸</span></div>
+<h1 class="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white leading-snug mb-8">是結果重要，還是過程重要？</h1>
+<div class="post-body text-slate-700 dark:text-slate-300">
+<p>接續曾經提到的AI發展議題，這次就來討論下，所謂的創作，到底是結果重要，還是過程重要？</p>
+<p>其實這個議題沒有所謂的標準答案，因為不同的對象有不同的需求，所以就會有不同的評價。但今天倘若加入了AI代工這個變數，這事情恐怕就不再是能這樣輕易區分了。</p>
+<p>我舉個例子來說，以藝術創作為例，到底是學畫跟作畫的過程有價值，還是成品有價值呢？我相信兩派的人各有各的說法，那當然也有兩者都有價值的支持者。</p>
+<p>但是一旦加入了AI快速學習後的量產代工機制，過程被取代了，未來人的生活重心，可能就不再重視過程這塊，而是如何高效的產出結果，那這樣被壓低生產成本的量產結果，到底又算不算有價值呢？這就要回過來看，各種結果是如何被定義為有價值了？</p>
+<p>人們對於一個作品的評價方式，往往是先從&quot;人類&quot;、&quot;個人&quot;的主觀喜好標準來評判，然後才會是一些客觀的影響因子去左右，所以通常作品的價值，就是來自市場普羅大眾的喜好；而一些極端小族群的喜好，因為難以被推廣，也不會成為人們所謂的&quot;共識&quot;。</p>
+<p>但喜好標準，僅只是實現了價值被接受的廣度，而不是價值被認定的深度，那深度又是哪裡來的呢？</p>
+<p>深度就是來自於製作過程的困難度，也就是製作過程的成本。越讓人直覺是繁瑣、耗工、技術性的東西，人們就會越容易去拉抬這個東西的價值，有的人可能會反駁，認為也是有充滿創意的人，簡單的製作過程，就能產生高評價的成品，但這論點，其實並沒有跳脫方才提到的價值邏輯，一般人想不到的Idea，畢竟也算是一種技術性的創造過程，構思設計也是要基礎知識的學習成本。</p>
+<p>對於現在的社會，因為生產都還是以&quot;人&quot;為主，所以大概率，普遍接受實作成本等於價值深度的說法。那倘若當AI代工普及化了之後？可能一個新的點子一做出成品，就一窩蜂的AI應用魔改出現，AI代工把原本人們要花的溝通跟返工成本都壓縮到了最小，那是否會感到被短時間量產的東西沒有價值了呢？或者說一開始的那位設計者，就只被認定有了那麼&quot;短短幾天&quot;的價值？</p>
+<p>當AI應用真正普及於人類社會的時候，一個作品價值的定義，可能會變得短暫且模糊。但畢竟AI是基於人類的需求而生，為了找到最佳解、簡化流程與便利生活，這個趨勢肯定是無法擋也無法逆，所以在這發展過程的人們得想清楚，是否能接受一個短暫，甚至幾乎&quot;沒有價值認定&quot;的世界發展。</p>
+<p>當一切的產出都幾乎不再需要時間跟人工，人們只需要一直學習知識，跟貢獻獨特想法讓AI代工施行，一切的想法跟結果，因為&quot;獨有&quot;的時間極其短暫，也就不會再有所謂的&quot;不平凡&quot;。</p>
+<p>或許AI發展的未來世界，人們都不再需要工作，只需要躺平，動動腦跟嘴，其他一切生活所需，AI都能一併搞定。但是否也意味著，人類會漸漸的...像AI一樣成為一種工具，然後慢慢的失去...身為&quot;人&quot;獨有的價值呢？</p>
+<p>或許在最初，人們追求&quot;不平凡&quot;的過程，才是真正一切&quot;價值&quot;的存在；但也或許這世界，會因為AI技術的快速發展，每天都變得不一樣。事情不會只有單一的&quot;好&quot;跟&quot;壞&quot;，還是端看人們用甚麼方向去看待它。</p>
+
+</div>
+</article>
+<nav class="mt-14 pt-6 border-t border-slate-200 dark:border-slate-700 grid sm:grid-cols-2 gap-4 text-sm"><a href="568.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400"><span class="text-slate-500 dark:text-slate-400">← 上一篇</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">是為了麵包，還是已成習慣？</span></a><a href="687.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400 sm:text-right"><span class="text-slate-500 dark:text-slate-400">下一篇 →</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">興趣到專業</span></a></nav>
+</main>
+<footer class="bg-slate-100 dark:bg-slate-950 py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
+<div class="max-w-6xl mx-auto px-6 lg:px-8 text-sm text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row justify-between gap-2">
+<span>© 2026 Personal Portfolio. All rights reserved.</span><a href="../../index.html" class="hover:text-sky-500">← 回到首頁</a>
+</div></footer>
+<script>
+(function () {
+  var el = document.documentElement;
+  try {
+    if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) el.classList.remove('dark'); else el.classList.add('dark');
+  } catch (e) { el.classList.add('dark'); }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    el.classList.toggle('dark');
+    try { localStorage.theme = el.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+  });
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>廢廢的pixel創作 - 貓狗貼貼 | 部落格</title>
+<meta name="description" content="這幾天除了研究一堆部落格的差異跟嵌入檔案的辦法，以及搞虛擬人聲的軟體外，還參考網上大佬的pixel繪圖作品，練習基礎的工具使用跟動畫製作。 說真的。我的習慣都是…">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class' }</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; } .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.post-body { font-size: 1.08rem; line-height: 2; }
+.post-body p { margin: 0 0 1.4em; overflow-wrap: anywhere; }
+.post-body h2, .post-body h3, .post-body h4 { font-weight: 700; margin: 2em 0 .8em; color: inherit; }
+.post-body h2 { font-size: 1.5rem; } .post-body h3 { font-size: 1.25rem; }
+.post-body ul, .post-body ol { margin: 0 0 1.4em 1.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+.post-body li { margin: .3em 0; }
+.post-body a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.post-body hr { margin: 2em 0; border-color: rgba(148,163,184,.4); }
+.post-body blockquote { border-left: 3px solid #38bdf8; padding-left: 1em; margin: 0 0 1.4em; opacity: .85; }
+.post-body .note { font-size: .875rem; opacity: .6; border-top: 1px dashed rgba(148,163,184,.5); padding-top: 1em; margin-top: 2em; }
+</style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white relative bg-slate-50 text-slate-700 dark:bg-[#0f172a] dark:text-slate-300 transition-colors duration-500">
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-sky-400/20 dark:bg-sky-600/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+</div>
+<header class="fixed w-full top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-6xl mx-auto px-6 lg:px-8"><div class="flex items-center justify-between h-16">
+<a href="../../index.html" class="font-bold text-xl tracking-wider text-slate-900 dark:text-white">PORTFOLIO<span class="text-sky-500 dark:text-sky-400">.</span></a>
+<nav><ul class="flex space-x-6 md:space-x-8 text-sm font-medium">
+<li><a href="../../index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
+<li><a href="../../blog/index.html" class="text-sky-600 dark:text-sky-400">部落格</a></li>
+</ul></nav>
+</div></div></header>
+<button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-300 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-all focus:outline-none group" title="切換深淺色">
+<i class="fas fa-sun text-xl block dark:hidden"></i><i class="fas fa-moon text-xl hidden dark:block"></i>
+</button>
+<main class="max-w-3xl mx-auto px-6 pt-28">
+<a href="../index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回部落格</a>
+<article class="mt-6">
+<div class="flex flex-wrap items-center gap-3 mb-3 text-sm text-slate-500 dark:text-slate-400"><time>2023-02-02</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">專業學習</span></div>
+<h1 class="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white leading-snug mb-8">廢廢的pixel創作 - 貓狗貼貼</h1>
+<div class="post-body text-slate-700 dark:text-slate-300">
+<p>這幾天除了研究一堆部落格的差異跟嵌入檔案的辦法，以及搞虛擬人聲的軟體外，還參考網上大佬的pixel繪圖作品，練習基礎的工具使用跟動畫製作。</p>
+<p>說真的。我的習慣都是蠻幹起家、土法煉鋼，所以就先用介面功能最陽春的Piskel工具來畫跟做動畫，反正全都先選預設開檔，然後照個參考圖點就對了；那因為我以前有一些Photoshop的Palettes的經驗，所以就先用Hololive官方的人物圖，把狗狗Korone跟貓貓Okayu的Palettes做出來，確定顏色滿意後才開始照點。</p>
+<p>我首先是完成了狗狗的站立圖，然後想說看看Piskel做簡單動作的可能性，就嘗試另外做了一個跳舞的動畫，因為人物身上有白色的部份，就只好把背景色變黑的。</p>
+<p>接著是把貓貓站立圖給做出來，因為我發現Hololive的原圖衣著上還有一些顏色，是那位網上大佬去掉但我希望保留的，所以做了一些衣著顏色的微差異。</p>
+<p>最後是貓狗貼貼的動畫部份，因為網上比較多建議用Aseprite做pixel動畫，所以這次就改用Aseprite，但除了匯入跟組合圖檔、影格、圖層這幾塊用的還算順利，座標拖曳跟動畫填色真的是搞死我了，推測是因為我不曉得，要怎麼讓Piskel的最小繪筆單格等於Aseprite的繪筆單格大小，讓匯出、匯入檔案時單位格大小相符，所以光是調Aseprite的繪筆粗細，就搞死自己了。</p>
+<p>其中我有偷偷修了下狗狗的頭飾，不然原本看起來太像一朵花了...XD</p>
+<p>沒辦法，我是超討厭複雜的，尤其看到一堆密密麻麻要設定的東西，最喜歡的就是東西丟進去，一兩個工具微調一下就能出來的那種，那反正最後成品有搞出來了，沒100分也有70分(研究所及格分)。甚麼？你說人物動作鬼畜？我沒讓狗狗是飄過去的就好了...XD</p>
+<p>最後結語，真的很感謝網上分享創作的大大們。</p>
+<p>這次的作品只能算是個練手，畢竟自己不是美術出生，就只好用試誤法，一路用撞的來學習。</p>
+<p>之後預計還會再多抓幾隻來試做3貼貼、5貼貼的動畫當練習，後續會再拿其他不同頭身比的網上大老pixel作品來參考學習；等比較能掌控繪圖工具跟立繪、pixel圖關係時，再來拿網上的立繪大圖自行創作，甚麼空想創作啥的，就還是先別為難我的舊時代處理器(生鏽的大腦)了。</p>
+<p class="note">本篇原文附有 8 張圖片或影片，尚未移轉到這裡。</p>
+</div>
+</article>
+<nav class="mt-14 pt-6 border-t border-slate-200 dark:border-slate-700 grid sm:grid-cols-2 gap-4 text-sm"><a href="490.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400"><span class="text-slate-500 dark:text-slate-400">← 上一篇</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">嘗試玩下買來的虛擬人聲軟體</span></a><a href="568.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400 sm:text-right"><span class="text-slate-500 dark:text-slate-400">下一篇 →</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">是為了麵包，還是已成習慣？</span></a></nav>
+</main>
+<footer class="bg-slate-100 dark:bg-slate-950 py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
+<div class="max-w-6xl mx-auto px-6 lg:px-8 text-sm text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row justify-between gap-2">
+<span>© 2026 Personal Portfolio. All rights reserved.</span><a href="../../index.html" class="hover:text-sky-500">← 回到首頁</a>
+</div></footer>
+<script>
+(function () {
+  var el = document.documentElement;
+  try {
+    if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) el.classList.remove('dark'); else el.classList.add('dark');
+  } catch (e) { el.classList.add('dark'); }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    el.classList.toggle('dark');
+    try { localStorage.theme = el.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+  });
+})();
+</script>
+
+</body></html>

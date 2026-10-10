@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>遊戲業流浪多年隨想(僅個人猜想，自說自話) | 部落格</title>
+<meta name="description" content="在遊戲業打滾了應該有9年多，歷經了PC單機、PC線上、頁遊、手遊的時代，也滾過營運企劃、研發企劃、產品專員幾個職務，看著台灣遊戲業從自製單機到代理營運、外資進駐…">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class' }</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; } .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.post-body { font-size: 1.08rem; line-height: 2; }
+.post-body p { margin: 0 0 1.4em; overflow-wrap: anywhere; }
+.post-body h2, .post-body h3, .post-body h4 { font-weight: 700; margin: 2em 0 .8em; color: inherit; }
+.post-body h2 { font-size: 1.5rem; } .post-body h3 { font-size: 1.25rem; }
+.post-body ul, .post-body ol { margin: 0 0 1.4em 1.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+.post-body li { margin: .3em 0; }
+.post-body a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.post-body hr { margin: 2em 0; border-color: rgba(148,163,184,.4); }
+.post-body blockquote { border-left: 3px solid #38bdf8; padding-left: 1em; margin: 0 0 1.4em; opacity: .85; }
+.post-body .note { font-size: .875rem; opacity: .6; border-top: 1px dashed rgba(148,163,184,.5); padding-top: 1em; margin-top: 2em; }
+</style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white relative bg-slate-50 text-slate-700 dark:bg-[#0f172a] dark:text-slate-300 transition-colors duration-500">
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-sky-400/20 dark:bg-sky-600/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+</div>
+<header class="fixed w-full top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-6xl mx-auto px-6 lg:px-8"><div class="flex items-center justify-between h-16">
+<a href="../../index.html" class="font-bold text-xl tracking-wider text-slate-900 dark:text-white">PORTFOLIO<span class="text-sky-500 dark:text-sky-400">.</span></a>
+<nav><ul class="flex space-x-6 md:space-x-8 text-sm font-medium">
+<li><a href="../../index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
+<li><a href="../../blog/index.html" class="text-sky-600 dark:text-sky-400">部落格</a></li>
+</ul></nav>
+</div></div></header>
+<button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-300 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-all focus:outline-none group" title="切換深淺色">
+<i class="fas fa-sun text-xl block dark:hidden"></i><i class="fas fa-moon text-xl hidden dark:block"></i>
+</button>
+<main class="max-w-3xl mx-auto px-6 pt-28">
+<a href="../index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回部落格</a>
+<article class="mt-6">
+<div class="flex flex-wrap items-center gap-3 mb-3 text-sm text-slate-500 dark:text-slate-400"><time>2022-08-19</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">碎碎唸</span></div>
+<h1 class="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white leading-snug mb-8">遊戲業流浪多年隨想(僅個人猜想，自說自話)</h1>
+<div class="post-body text-slate-700 dark:text-slate-300">
+<p>在遊戲業打滾了應該有9年多，歷經了PC單機、PC線上、頁遊、手遊的時代，也滾過營運企劃、研發企劃、產品專員幾個職務，看著台灣遊戲業從自製單機到代理營運、外資進駐協作開發，直到遊戲排行上幾乎看不到國產商品的興衰，這些年究竟發生了甚麼變化呢？</p>
+<p>我這邊以產品管理的觀點出發，推測以下幾個因素：</p>
+<ol><li>技術力優勢不再</li><li>對市場走向的理解落後</li><li>沒有擴展全球市場的能力</li><li>資本額的差距</li><li>缺少商業模式的思維</li><li>缺少大型企業結構的思維</li></ol>
+<p>首先是技術力優勢不再這塊，跟國際相比，台灣資深開發者仍是有技術實力的，但很多可能安逸在老企業中，或是被外商、外資公司給挖角，已成為這些競爭者的助力，凡舉&quot;崩壞&quot;系列、&quot;黑悟空&quot;就能看到中國開發團隊的實力水平，而更不用說長年霸榜的日、韓系遊戲，過去在台灣主力開發轉移至代理營運的時代，自研技術其實就已經出現斷層，現今台灣或可能在Indie Game領域還能找到一些市場空間，但對於要正面比拚的3A級規模的競品，無論單機或線上遊戲，似乎都很難追上。</p>
+<p>然後是對市場走向的理解落後，在PC網路遊戲盛行的時代，大量的日、韓系競品出現，加上歐美大型線上遊戲也在這期間入場，台灣玩家的胃口被養大，不再侷限於國產武俠遊戲，頂多為數不多的情懷IP Online作品還能撐場，在這之後還歷經了PC線上遊戲市場縮減、手遊市場增長的變化，接著是各式國際知名IP衍伸商品的轟炸，市場對產品品質、新鮮感的需求越來越高，導致以中小型公司為主的台灣遊戲業，在這追趕過程中越顯無力，一直無法跟上市場需求，進而導致國產商品的生存空間越來越小。</p>
+<p>沒有擴展全球市場的能力，對全球市場的不理解或是沒有渠道、通路，其實一直是台灣開發商的通病，一直以台灣做為市場目標，先是已被佔據的市場份額，然後是產品實力無法比拚競爭者，導致公司常處在一個不上不下的經營狀況。這裡說的實力不只是開發技術、產品品質，還包括了產品市場定位、目標對象喜好、推廣行銷渠道、遊戲內消耗與付費循環的精準度、品牌建立等，都有一定的實力差距，或者說很多都被台灣業界搞得像玄學，當市場份額不夠，又不願意或沒有能力拓展到全球市場，結果很容易就是死循環，為何近期台灣的Indie Game能有些成績？不就是因為Steam平台會員擴及全球，同質性高的竟品數量有限，加上一次性的買斷制可以減少後續倚賴運營操作獲利的比重，避開了很多硬實力比拚的點。</p>
+<p>資本額的差距，要請得起有技術力的人，足夠的團隊人力(也許20到40人)，還要能夠有數個案子上線驗證公司市場分析、產品檢核的實力，光以現在大賺的線上手遊，單款開發一年上億台幣成本也不誇張，倘若至少要3個完整案子驗證結果，那公司資本額需求就已經是三億以上的驚人數字，這都還不包括廣告行銷通路的成本跟難度、長期的營運成本，一般的新創公司根本沒這能力做到，除非是有其他既有的成功事業來支持，而老公司多半都已經是跟外資廠商合作的協力開發者，是否產品出來後能掛著國產研發的招牌都很難說。</p>
+<p>缺少商業模式的思維，從台灣公司開出的職缺條件，常可以發現專案經理(Project Manager)跟產品經理(Product Manager)的定義都沒法明確區分，甚至很多遊戲公司還把PM的工作兼給企劃或找個新人來學，反而商學相關產業卻能很清楚的定義兩者差異，專案經理主要是控制產品開發的成本、時間跟完成度，而產品經理得整合研發、運營、行銷、公司高層等單位資訊跟需求，確保產品盡可能符合目標市場需求與其他公司目標(例如品牌)，有時還要評估產品變更設計是否影響原市場跟公司目標去下決策，影響到能否達成有效商業模式的循環。開一案是一案，而不是多個產品線去驗證市場，這或許就是台灣自研遊戲產品，常沒法跟穩定獲利的商業模式搭上關係的主因，也顯得台灣遊戲產業思維的不夠成熟。</p>
+<p>缺少大型企業結構的思維，從台灣公司在程式與企劃、美術間給薪的差距，以及缺少更細項專精的職缺(例如TA、UX、產品經理)，就顯現出台灣遊戲公司仍偏向傳統的技術主導，對產品設計及管理的不重視，沒有提供一些配比，就算已經達到擴大公司規模的階段，卻還停留在中、小企業的一人多工模式。首先規模越大的企業，每一個工作區塊就要越專精才有足夠的競爭力，設計是跟市場需求息息相關的，沒有足夠的設計精度沒法有效打中目標市場；同樣的，沒有產品管理人員跨部門橫向整合溝通，產品的目標市場也可能會有誤差。被叫好的遊戲是藝術品，可以做出品牌但不一定叫座，這是一種方向，但公司一定要有叫座的&quot;商品&quot;才能生存；同樣的，市場分析也不是玄學，它會有起頭的假設，跟最終量化比較的結果驗證，但前提都要能具體理解使用者需求，而不是只拿自己的經驗、喜好來做臆測，成熟的商品化商業模式才是公司生存的根基</p>
+<p>最後補充說明下，內地大廠在遊戲開發的產品經理這塊，大多已有具體的技能需求，因為要能跨足研發、營運、行銷多個領域專業，所以每個滿分10分的專業，可能至少都要有個4-5分左右的理解，整合內地技能認知與我自己認定的經歷標準，至少需要跟著研發合作過一個小型專案、一個線上專案的開發，合作過一個新產品的上線營運跟一個已上架產品的維運，倘若能有跟行銷組、數據分析人員合作的經驗更好，總體來說4~6年的混和專業經歷，會較適合培養成全面向的產品經理，然後再進修跨部門工作流程、服務端跟資料庫邏輯、產品上架流程、市調測試、市場分析、竟品分析、使用者體驗分析等專業，至少完整跟進任職公司2個專案從開發到上線，才能讓這職位專長趨於完整，培育成本算是很高了。(因為公司各部不一定願意提供產品管理人深入參與工作業務的機會，所以連我自己的專業上都仍有不足)</p>
+<p>結論：</p>
+<p>現在的遊戲業競爭，不再只是開發自己覺得好的產品時代，而是結合商學、產品學，甚至心理學的時代，從研發、營運走完，沒到產品管理這塊都還只是個起點，因為思維必須從局部的目標執行，轉向整體的成敗檢核，才能確保產品的成功不是曇花一現，成熟的產品管理能夠為公司帶來成功的產品線開發模型，然而反觀台灣遊戲業對這塊的重視程度，卻好像停留在最初的起點，還在純以個人喜好、博弈的心態豪賭產品的成敗。</p>
+<p>待過大型陸資公司的工作經驗發現，分公司很難知道集團內部經營產品的完整Know How，而從研發角度更不容易知道營運面的詳細資訊，尤其是台灣以外的市場，在協作開發的過程，雖然能讓技術力提升，且有足夠的金援，但卻越加失去自行掌控市場跟營運的能力，最終變得脫離不了外資、外商企業的支持。</p>
+
+</div>
+</article>
+<nav class="mt-14 pt-6 border-t border-slate-200 dark:border-slate-700 grid sm:grid-cols-2 gap-4 text-sm"><a href="73.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400"><span class="text-slate-500 dark:text-slate-400">← 上一篇</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">我的空間找回來了(測試發文)</span></a><a href="217.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400 sm:text-right"><span class="text-slate-500 dark:text-slate-400">下一篇 →</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">對遊戲的熱情不再？</span></a></nav>
+</main>
+<footer class="bg-slate-100 dark:bg-slate-950 py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
+<div class="max-w-6xl mx-auto px-6 lg:px-8 text-sm text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row justify-between gap-2">
+<span>© 2026 Personal Portfolio. All rights reserved.</span><a href="../../index.html" class="hover:text-sky-500">← 回到首頁</a>
+</div></footer>
+<script>
+(function () {
+  var el = document.documentElement;
+  try {
+    if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) el.classList.remove('dark'); else el.classList.add('dark');
+  } catch (e) { el.classList.add('dark'); }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    el.classList.toggle('dark');
+    try { localStorage.theme = el.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+  });
+})();
+</script>
+
+</body></html>

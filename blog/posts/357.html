@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>對AI發展的想法 | 部落格</title>
+<meta name="description" content="近日最爭議的話題之一，莫過於AI應用的發展了，無論是對話、美術成品、文案成品、產出程式碼、虛擬人聲歌唱等，也因此出現了兩派人，一派是怕被AI取代的專業工作者，而…">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class' }</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; } .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.post-body { font-size: 1.08rem; line-height: 2; }
+.post-body p { margin: 0 0 1.4em; overflow-wrap: anywhere; }
+.post-body h2, .post-body h3, .post-body h4 { font-weight: 700; margin: 2em 0 .8em; color: inherit; }
+.post-body h2 { font-size: 1.5rem; } .post-body h3 { font-size: 1.25rem; }
+.post-body ul, .post-body ol { margin: 0 0 1.4em 1.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+.post-body li { margin: .3em 0; }
+.post-body a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.post-body hr { margin: 2em 0; border-color: rgba(148,163,184,.4); }
+.post-body blockquote { border-left: 3px solid #38bdf8; padding-left: 1em; margin: 0 0 1.4em; opacity: .85; }
+.post-body .note { font-size: .875rem; opacity: .6; border-top: 1px dashed rgba(148,163,184,.5); padding-top: 1em; margin-top: 2em; }
+</style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white relative bg-slate-50 text-slate-700 dark:bg-[#0f172a] dark:text-slate-300 transition-colors duration-500">
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-sky-400/20 dark:bg-sky-600/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+</div>
+<header class="fixed w-full top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-6xl mx-auto px-6 lg:px-8"><div class="flex items-center justify-between h-16">
+<a href="../../index.html" class="font-bold text-xl tracking-wider text-slate-900 dark:text-white">PORTFOLIO<span class="text-sky-500 dark:text-sky-400">.</span></a>
+<nav><ul class="flex space-x-6 md:space-x-8 text-sm font-medium">
+<li><a href="../../index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
+<li><a href="../../blog/index.html" class="text-sky-600 dark:text-sky-400">部落格</a></li>
+</ul></nav>
+</div></div></header>
+<button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-300 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-all focus:outline-none group" title="切換深淺色">
+<i class="fas fa-sun text-xl block dark:hidden"></i><i class="fas fa-moon text-xl hidden dark:block"></i>
+</button>
+<main class="max-w-3xl mx-auto px-6 pt-28">
+<a href="../index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回部落格</a>
+<article class="mt-6">
+<div class="flex flex-wrap items-center gap-3 mb-3 text-sm text-slate-500 dark:text-slate-400"><time>2022-12-17</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">碎碎唸</span></div>
+<h1 class="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white leading-snug mb-8">對AI發展的想法</h1>
+<div class="post-body text-slate-700 dark:text-slate-300">
+<p>近日最爭議的話題之一，莫過於AI應用的發展了，無論是對話、美術成品、文案成品、產出程式碼、虛擬人聲歌唱等，也因此出現了兩派人，一派是怕被AI取代的專業工作者，而另一派則是將AI作為應用工具或娛樂的一群人，無論哪一方的支持或反對論調，在我自己的認知上，都是對的，但也是錯的，因為不同的AI發展進度，會有不一樣程度的影響，導致雙方提出的結果都有存在跟消失的時期。</p>
+<p>AI發展的現階段進度，大概處於應用階段，也就是說無法滿足使用者任意提出的設定條件，必須經由專業的中間人調教後，才有辦法產出有市場價值的成品，因此還無法真正取代多數的工作者，甚至因為高質產出還沒到浮濫的數量程度，可能有其獲利空間，至少在創作相關法令規範還不清晰的前提下。</p>
+<p>但AI的本質是甚麼，代工？恐怕不是，AI真實的本質是最佳解。</p>
+<p>也就是說當AI發展到能把人類的&quot;做&quot;這件事情都自動化搞定時，人類只剩下&quot;想&quot;這塊有價值，畢竟AI不但能實作也能驗證，它只需要人們能與它溝通，把&quot;想&quot;的事情讓它了解，它就能代替人們實作以及驗證，甚至短時間就能跑無數種可能方案，因此&quot;做&quot;這件事，變得沒有價值了，人類變成服務AI科技發展的存在，那當然AI也協助產出人類的生存所需。</p>
+<p>但對於人類現今社會勞力換取工資的生存模式，這件事本身就出現了衝突，有任何人能接受用想的，然後跟AI打字或說話，就能拿到酬勞？甚至這些想的東西經驗證後還可能沒有實質應用價值。且很多人是存在競爭心的，就想高人一等就想擁有更多的價值觀，沒法被迫趨於一般人，那這群人是否又會成為這科技發展過程的紛爭來源呢？也難怪Matrix電影裡會選擇用培養皿的方式去確保人類不會搗蛋。</p>
+<p>而對於&quot;AI發展，人類將何去何從？&quot;這問題，我的想法其實就&quot;專研你想深入了解的學門&quot;。</p>
+<p>現階段的社會，確實還要搭配實作跟商業化模式，人們才能賺錢生存，但這個想必是每個過來人都有的基本能力，而對於未來AI越來越能取代更多的&quot;做&quot;的事，人類能協助AI發展的&quot;想&quot;，也還是得經過長年的培訓跟專研，才有辦法跟AI有效的溝通，無論你是在電腦前打字、機器人前比手畫腳，或甚至是在虛擬世界裡跟虛擬AI的人物直接互動，你都得先懂這個專業學門的內容，你才有辦法更進一步說明你的需求，也就是說AI被發明時，終究有滿足&quot;人類需求&quot;與滿足&quot;人類所在世界發展&quot;的這些區塊，人類還是有其價值存在。</p>
+<p>只是說到最後，那人類要生存不就得要有吃的，要能賺錢才有辦法花錢？</p>
+<p>這問題在於，人類能否接受與創造出一個真正大同社會的環境，當AI有能力自動化產出跟維持人類生活的基本需求時，這時候其實僅需少數的人就能維護AI系統，也就是說一般人光是躺平拿福利政策的供給，就足夠生存了，而多工作者當然能拿到更多，但人口的存在除了延續人類生存外，也包含了產出，因此得控制在&quot;有效&quot;人口數，然後讓躺平的人也有產出，那真有可能就是虛擬實境環境的創作，無論哪個專業領域的，依據AI評估需求去提供環境，但相信至少能比Matrix在虛擬世界中又搞了一套現實生活來的好些。</p>
+<p>為何像馬斯克這類大佬提出不願意人類走向服務AI的路子呢？</p>
+<p>我的猜想，他們大概只願意服務&quot;人類&quot;，或者說服務&quot;自己所想&quot;，不願服務&quot;人造物&quot;，但也或許他們是害怕在AI發展過程中出了錯時，人類要有能力抵禦這些衝突避免滅絕，這種考慮也是合理的推測。</p>
+<p>而我自己是希望追求完全自由的人生，不要被任何人(親人)、事(工作)、物(錢)去束縛自己想做的事情，所以虛擬世界對我來說是唯一的可能，因為是屬於自己獨有的世界，而不用跟其他人發生牽連，也是真正的幸福指數呈現，而不是大家所喜歡使用的財富指數。也許虛擬世界的發展距離現在還很遙遠，但畢竟AI的發展速度不是加法，也不是乘法，而是指數成長，搭配上實體機械的技術，或許在我的人生中，仍有一面之緣的機會。</p>
+
+</div>
+</article>
+<nav class="mt-14 pt-6 border-t border-slate-200 dark:border-slate-700 grid sm:grid-cols-2 gap-4 text-sm"><a href="217.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400"><span class="text-slate-500 dark:text-slate-400">← 上一篇</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">對遊戲的熱情不再？</span></a><a href="372.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400 sm:text-right"><span class="text-slate-500 dark:text-slate-400">下一篇 →</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">興趣使然的遊戲評測系列 –JPKing跳爺瞎玩</span></a></nav>
+</main>
+<footer class="bg-slate-100 dark:bg-slate-950 py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
+<div class="max-w-6xl mx-auto px-6 lg:px-8 text-sm text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row justify-between gap-2">
+<span>© 2026 Personal Portfolio. All rights reserved.</span><a href="../../index.html" class="hover:text-sky-500">← 回到首頁</a>
+</div></footer>
+<script>
+(function () {
+  var el = document.documentElement;
+  try {
+    if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) el.classList.remove('dark'); else el.classList.add('dark');
+  } catch (e) { el.classList.add('dark'); }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    el.classList.toggle('dark');
+    try { localStorage.theme = el.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+  });
+})();
+</script>
+
+</body></html>

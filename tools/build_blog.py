@@ -122,10 +122,12 @@ body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
 </div>
 <header class="fixed w-full top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
 <div class="max-w-6xl mx-auto px-6 lg:px-8"><div class="flex items-center justify-between h-16">
-<a href="{root}index.html" class="font-bold text-xl tracking-wider text-slate-900 dark:text-white">PORTFOLIO<span class="text-sky-500 dark:text-sky-400">.</span></a>
-<nav><ul class="flex space-x-6 md:space-x-8 text-sm font-medium">
+<a href="{root}index.html" class="hidden sm:block font-bold text-xl tracking-wider text-slate-900 dark:text-white">PORTFOLIO<span class="text-sky-500 dark:text-sky-400">.</span></a>
+<nav><ul class="flex space-x-5 md:space-x-8 text-sm font-medium">
 <li><a href="{root}index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
-<li><a href="{root}blog/index.html" class="text-sky-600 dark:text-sky-400">部落格</a></li>
+<li><a href="{root}resume.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">履歷</a></li>
+<li><a href="{root}portfolio/index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">作品集</a></li>
+<li><a href="{root}blog/index.html" class="text-sky-600 dark:text-sky-400 font-semibold">部落格</a></li>
 </ul></nav>
 </div></div></header>
 <button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-300 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-all focus:outline-none group" title="切換深淺色">
@@ -189,7 +191,7 @@ def build_index():
 <div class="text-center mb-10">
 <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">部落格</h1>
 <div class="w-20 h-1 bg-sky-500 rounded mx-auto mb-4"></div>
-<p class="text-slate-600 dark:text-slate-400">遊戲產業、AI、虛擬創作的想法，以及舊部落格的文章存檔。</p>
+<p class="text-slate-600 dark:text-slate-400">興趣、研究與生活分享，以及舊部落格的文章存檔。</p>
 </div>
 <style>
 .chip {{ padding: .35rem .9rem; border-radius: 9999px; font-size: .875rem; border: 1px solid rgba(148,163,184,.5); background: transparent; cursor: pointer; transition: all .2s; }}
@@ -230,7 +232,7 @@ def build_index():
 })();
 </script>"""
     (OUT).mkdir(exist_ok=True)
-    (OUT / "index.html").write_text(page("部落格 | Portfolio", "遊戲產業、AI、虛擬創作的想法與舊文存檔", "../", body, script), encoding="utf8")
+    (OUT / "index.html").write_text(page("部落格 | Portfolio", "興趣、研究與生活分享，以及舊文存檔", "../", body, script), encoding="utf8")
 
 
 def build_posts():
@@ -275,7 +277,7 @@ def build_home_teaser():
                 <div class="text-center mb-12 reveal">
                     <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2 transition-colors">部落格</h2>
                     <div class="w-20 h-1 bg-sky-500 rounded mx-auto mb-4"></div>
-                    <p class="text-slate-600 dark:text-slate-400 transition-colors">遊戲產業、AI、虛擬創作的一些想法。</p>
+                    <p class="text-slate-600 dark:text-slate-400 transition-colors">興趣、研究與生活分享。</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">{cards}</div>
                 <div class="text-center mt-10">

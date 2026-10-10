@@ -125,8 +125,8 @@ body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
 <a href="{root}index.html" class="hidden sm:block font-bold text-xl tracking-wider text-slate-900 dark:text-white">PORTFOLIO<span class="text-sky-500 dark:text-sky-400">.</span></a>
 <nav><ul class="flex space-x-5 md:space-x-8 text-sm font-medium">
 <li><a href="{root}index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
-<li><a href="{root}resume.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">履歷</a></li>
-<li><a href="{root}portfolio/index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">作品集</a></li>
+<li><a href="{root}resume.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">我的專長</a></li>
+<li><a href="{root}portfolio/index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">我的作品</a></li>
 <li><a href="{root}blog/index.html" class="text-sky-600 dark:text-sky-400 font-semibold">部落格</a></li>
 </ul></nav>
 </div></div></header>

@@ -11,6 +11,11 @@
     "生活記事",
     "運動健身",
     "外語學習",
+    "Vtuber廢片",
+    "AI創作",
+    "營養學",
+    "當個農夫",
+    "探索世界",
     "未分類"
   ],
   "now": {
@@ -83,6 +88,51 @@
       ],
       "color": "#ddd6fe",
       "summary": "興趣使然的遊戲試玩與評測。"
+    },
+    {
+      "slug": "vtuber",
+      "name": "Vtuber廢片",
+      "categories": [
+        "Vtuber廢片"
+      ],
+      "color": "#fecdd3",
+      "summary": "狗子今日熱門"
+    },
+    {
+      "slug": "ai",
+      "name": "AI創作",
+      "categories": [
+        "AI創作"
+      ],
+      "color": "#c7d2fe",
+      "summary": "多鄰Walk給Gemini Canvas跑移動跟事件觸發、事件完成測試，Life BGM進行AI自主生成開發"
+    },
+    {
+      "slug": "nutrition",
+      "name": "營養學",
+      "categories": [
+        "營養學"
+      ],
+      "color": "#d9f99d",
+      "summary": "上過的營養學分課快忘光了"
+    },
+    {
+      "slug": "farmer",
+      "name": "當個農夫",
+      "categories": [
+        "當個農夫"
+      ],
+      "color": "#d6c8a4",
+      "summary": "閒閒找東西種"
+    },
+    {
+      "slug": "explore",
+      "name": "探索世界",
+      "categories": [
+        "探索世界"
+      ],
+      "color": "#a5f3fc",
+      "summary": "這次要到哪裡呢？"
     },
     {
       "slug": "archive",

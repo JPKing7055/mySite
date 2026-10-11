@@ -1,33 +1,115 @@
 {
- "hidden_ids": [
-  20,
-  30,
-  28,
-  26,
-  64,
-  65,
-  66,
-  67,
-  59,
-  58,
-  55,
-  60,
-  24,
-  34,
-  43,
-  33,
-  63
- ],
- "category_labels": {
-  "未分類": "早期舊文"
- },
- "category_order": [
-  "專業學習",
-  "遊戲試玩",
-  "虛擬創作",
-  "碎碎唸",
-  "生活記事",
-  "初音V家",
-  "未分類"
- ]
+  "hidden_ids": [
+    20,
+    30,
+    28,
+    26,
+    64,
+    65,
+    66,
+    67,
+    59,
+    58,
+    55,
+    60,
+    24,
+    34,
+    43,
+    33,
+    63
+  ],
+  "category_labels": {
+    "未分類": "早期舊文"
+  },
+  "category_order": [
+    "虛擬歌手創作",
+    "專業學習",
+    "遊戲試玩",
+    "碎碎唸",
+    "生活記事",
+    "運動健身",
+    "外語學習",
+    "未分類"
+  ],
+  "now": {
+    "title": "現在在做的事",
+    "paragraphs": [
+      "趕工專題中，連假都沒得玩…"
+    ],
+    "updated": "2026-10-11"
+  },
+  "zones": [
+    {
+      "slug": "vocal",
+      "name": "虛擬歌手創作",
+      "categories": [
+        "虛擬歌手創作"
+      ],
+      "color": "#99f6e4",
+      "summary": "Vocaloid 與虛擬人聲軟體的創作與心得。"
+    },
+    {
+      "slug": "fitness",
+      "name": "運動健身",
+      "categories": [
+        "運動健身"
+      ],
+      "color": "#fdba74",
+      "summary": "忘了練胸，待補"
+    },
+    {
+      "slug": "language",
+      "name": "外語學習",
+      "categories": [
+        "外語學習"
+      ],
+      "color": "#fde047",
+      "summary": "YT轉譯小工具，每日一詞讚"
+    },
+    {
+      "slug": "life",
+      "name": "生活記事",
+      "categories": [
+        "生活記事"
+      ],
+      "color": "#bbf7d0",
+      "summary": "日常生活的碎片與隨手記錄。"
+    },
+    {
+      "slug": "murmur",
+      "name": "碎碎唸",
+      "categories": [
+        "碎碎唸"
+      ],
+      "color": "#fbcfe8",
+      "summary": "對遊戲業、AI 與創作的一些想法。"
+    },
+    {
+      "slug": "study",
+      "name": "專業學習",
+      "categories": [
+        "專業學習"
+      ],
+      "color": "#bfdbfe",
+      "summary": "專業相關的學習與練習紀錄。"
+    },
+    {
+      "slug": "games",
+      "name": "遊戲試玩",
+      "categories": [
+        "遊戲試玩"
+      ],
+      "color": "#ddd6fe",
+      "summary": "興趣使然的遊戲試玩與評測。"
+    },
+    {
+      "slug": "archive",
+      "name": "舊文存檔",
+      "categories": [
+        "未分類"
+      ],
+      "color": "#e7e5e4",
+      "summary": "2006～2010 年的舊部落格日記，從 WordPress 搬回來。"
+    }
+  ]
 }

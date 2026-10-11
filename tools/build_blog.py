@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-"""Build the static blog section (blog/index.html and blog/posts/*.html).
+"""Build the static personal-space section.
+
+Output pages: blog/index.html (now + sticky-note wall), blog/zone/*.html (one per zone),
+blog/all.html (all posts with search/filter), blog/posts/*.html (articles).
 
 Usage:  pip install markdown-it-py   &&   python3 tools/build_blog.py
-Input:  tools/posts.json (post data), tools/blog_config.json (hidden posts, labels)
+Input:  tools/posts.json (post data), tools/blog_config.json (hidden posts, labels, now, zones)
 Output: blog/ (commit it; GitHub Pages serves it as-is)
 """
 import json, re, html, shutil
@@ -176,7 +179,7 @@ def card(p, root):
     )
 
 
-def build_index():
+def build_all():
     cats = {}
     for p in posts: cats[p["category"]] = cats.get(p["category"], 0) + 1
     ordered = [c for c in order if c in cats] + [c for c in cats if c not in order]
@@ -189,9 +192,10 @@ def build_index():
         blocks.append(f'<section class="year-block" data-year="{y}"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-12 mb-4 flex items-center gap-3">{y}<span class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></span></h2><div class="grid gap-4">{cs}</div></section>')
     body = f"""<main class="max-w-3xl mx-auto px-6 pt-28">
 <div class="text-center mb-10">
-<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">JP 的個人空間</h1>
+<a href="index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回個人空間</a>
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-4 mb-2">全部文章</h1>
 <div class="w-20 h-1 bg-sky-500 rounded mx-auto mb-4"></div>
-<p class="text-slate-600 dark:text-slate-400">興趣、研究與生活分享，以及舊部落格的文章存檔。</p>
+<p class="text-slate-600 dark:text-slate-400">依年份列出所有文章，可搜尋與依分類篩選。</p>
 </div>
 <style>
 .chip {{ padding: .35rem .9rem; border-radius: 9999px; font-size: .875rem; border: 1px solid rgba(148,163,184,.5); background: transparent; cursor: pointer; transition: all .2s; }}
@@ -232,7 +236,7 @@ def build_index():
 })();
 </script>"""
     (OUT).mkdir(exist_ok=True)
-    (OUT / "index.html").write_text(page("JP 的個人空間 | JPK Lab", "興趣、研究與生活分享，以及舊文存檔", "../", body, script), encoding="utf8")
+    (OUT / "all.html").write_text(page("全部文章 | JP 的個人空間", "所有文章，可搜尋與依分類篩選", "../", body, script), encoding="utf8")
 
 
 def build_posts():
@@ -261,6 +265,91 @@ def build_posts():
 """
         (d / f"{p['id']}.html").write_text(page(f"{p['title']} | JP 的個人空間", excerpt(p, 80), "../../", body), encoding="utf8")
 
+NOTE_CSS = """<style>
+.note { position: relative; display: flex; flex-direction: column; min-height: 11rem; padding: 1.75rem 1.4rem 1.2rem; background: var(--bg); color: #1e293b;
+  box-shadow: 0 10px 18px -6px rgba(0,0,0,.35); border-radius: 3px 3px 12px 3px; transform: rotate(var(--r, 0deg)); transition: transform .2s, box-shadow .2s; }
+.note::before { content: ""; position: absolute; top: -10px; left: 50%; width: 64px; height: 20px; margin-left: -32px; background: rgba(255,255,255,.55); box-shadow: 0 1px 2px rgba(0,0,0,.15); transform: rotate(-2deg); }
+.note:nth-child(3n+1) { --r: -1.2deg; } .note:nth-child(3n+2) { --r: .9deg; } .note:nth-child(3n) { --r: -.4deg; }
+a.note:hover { transform: rotate(0deg) translateY(-6px) scale(1.02); box-shadow: 0 18px 24px -8px rgba(0,0,0,.4); }
+.note h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: .5rem; }
+.note p { color: #334155; line-height: 1.7; font-size: .95rem; flex: 1; }
+.note .meta { margin-top: 1rem; font-size: .8rem; color: #475569; display: flex; justify-content: space-between; gap: .5rem; }
+.note.empty { cursor: default; }
+</style>"""
 
-build_index(); build_posts()
+
+def zone_posts(z):
+    return [p for p in posts if p["category"] in z["categories"]]
+
+
+def build_home():
+    zones = cfg.get("zones", [])
+    covered = {c for z in zones for c in z["categories"]}
+    for p in posts:
+        if p["category"] not in covered:
+            print(f"WARNING: post {p['id']} category '{p['category']}' is in no zone (only listed in all.html)")
+    now = cfg.get("now")
+    now_html = ""
+    if now:
+        paras = now["paragraphs"]
+        body_html = f'<p class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-snug mb-3">{esc(paras[0])}</p>'
+        body_html += "".join(f'<p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-3">{esc(t)}</p>' for t in paras[1:])
+        now_html = (
+            '<section class="mb-14 rounded-2xl p-8 md:p-10 border border-sky-300/60 dark:border-sky-500/30 bg-gradient-to-br from-sky-50 to-indigo-50 dark:from-slate-800 dark:to-slate-800/50 shadow-lg">'
+            f'<div class="flex items-center gap-2 mb-4 text-sky-600 dark:text-sky-400 font-semibold tracking-wide"><i class="fas fa-bolt"></i><span>{esc(now["title"])}</span></div>'
+            f'{body_html}<p class="text-sm text-slate-500 dark:text-slate-400 mt-4">更新於 {esc(now["updated"])}</p></section>'
+        )
+    notes = []
+    for z in zones:
+        zp = zone_posts(z)
+        style = f'style="--bg:{z["color"]}"'
+        if zp:
+            meta = f'<div class="meta"><span>{len(zp)} 篇</span><span>最近 {zp[0]["date"]}</span></div>'
+            notes.append(f'<a href="zone/{z["slug"]}.html" class="note" {style}><h3>{esc(z["name"])}</h3><p>{esc(z["summary"])}</p>{meta}</a>')
+        else:
+            meta = '<div class="meta"><span>尚無文章</span></div>'
+            notes.append(f'<div class="note empty" {style}><h3>{esc(z["name"])}</h3><p>{esc(z["summary"])}</p>{meta}</div>')
+    body = f"""<main class="max-w-5xl mx-auto px-6 pt-28">
+<div class="text-center mb-10">
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">JP 的個人空間</h1>
+<div class="w-20 h-1 bg-sky-500 rounded mx-auto mb-4"></div>
+<p class="text-slate-600 dark:text-slate-400">興趣、研究與生活分享。</p>
+</div>
+{NOTE_CSS}
+{now_html}
+<section>
+<div class="flex items-end justify-between mb-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white">專區</h2><span class="text-sm text-slate-500 dark:text-slate-400">點便條紙進去看文章</span></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 pt-3">
+{"".join(notes)}
+</div>
+</section>
+<div class="text-center mt-16"><a href="all.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-medium transition-all shadow-lg">查看全部 {len(posts)} 篇文章 <i class="fas fa-arrow-right"></i></a></div>
+</main>
+"""
+    OUT.mkdir(exist_ok=True)
+    (OUT / "index.html").write_text(page("JP 的個人空間 | JPK Lab", "現在在做的事，以及興趣、研究與生活分享的專區", "../", body), encoding="utf8")
+
+
+def build_zones():
+    d = OUT / "zone"
+    if d.exists(): shutil.rmtree(d)
+    d.mkdir(parents=True)
+    for z in cfg.get("zones", []):
+        zp = zone_posts(z)
+        if not zp: continue
+        cards = "\n".join(card(p, "../../") for p in zp)
+        body = f"""<main class="max-w-3xl mx-auto px-6 pt-28">
+<a href="../index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回個人空間</a>
+<div class="mt-6 mb-10 rounded-xl p-6" style="background:{z['color']};color:#1e293b">
+<h1 class="text-3xl font-extrabold mb-2">{esc(z['name'])}</h1>
+<p style="color:#334155">{esc(z['summary'])}</p>
+<p class="text-sm mt-3" style="color:#475569">共 {len(zp)} 篇</p>
+</div>
+<div class="grid gap-4">{cards}</div>
+</main>
+"""
+        (d / f"{z['slug']}.html").write_text(page(f"{z['name']} | JP 的個人空間", z["summary"], "../../", body), encoding="utf8")
+
+
+build_all(); build_home(); build_zones(); build_posts()
 print(f"built {len(posts)} posts")

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>虛擬歌手創作 | JP 的個人空間</title>
+<meta name="description" content="Vocaloid 與虛擬人聲軟體的創作與心得。">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class' }</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; } .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.post-body { font-size: 1.08rem; line-height: 2; }
+.post-body p { margin: 0 0 1.4em; overflow-wrap: anywhere; }
+.post-body h2, .post-body h3, .post-body h4 { font-weight: 700; margin: 2em 0 .8em; color: inherit; }
+.post-body h2 { font-size: 1.5rem; } .post-body h3 { font-size: 1.25rem; }
+.post-body ul, .post-body ol { margin: 0 0 1.4em 1.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+.post-body li { margin: .3em 0; }
+.post-body a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.post-body hr { margin: 2em 0; border-color: rgba(148,163,184,.4); }
+.post-body blockquote { border-left: 3px solid #38bdf8; padding-left: 1em; margin: 0 0 1.4em; opacity: .85; }
+.post-body .note { font-size: .875rem; opacity: .6; border-top: 1px dashed rgba(148,163,184,.5); padding-top: 1em; margin-top: 2em; }
+</style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white relative bg-slate-50 text-slate-700 dark:bg-[#0f172a] dark:text-slate-300 transition-colors duration-500">
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-sky-400/20 dark:bg-sky-600/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+</div>
+<header class="fixed w-full top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-6xl mx-auto px-6 lg:px-8"><div class="flex items-center justify-between h-16">
+<a href="../../index.html" class="hidden sm:block font-bold text-xl tracking-wider text-slate-900 dark:text-white">JPK<span class="text-sky-500 dark:text-sky-400"> Lab</span></a>
+<nav><ul class="flex space-x-4 sm:space-x-5 md:space-x-8 text-[13px] sm:text-sm font-medium">
+<li><a href="../../index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
+<li><a href="../../resume.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">成員專長</a></li>
+<li><a href="../../portfolio/index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">成員作品</a></li>
+<li><a href="../../blog/index.html" class="text-sky-600 dark:text-sky-400 font-semibold">成員個人空間</a></li>
+</ul></nav>
+</div></div></header>
+<button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-300 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-all focus:outline-none group" title="切換深淺色">
+<i class="fas fa-sun text-xl block dark:hidden"></i><i class="fas fa-moon text-xl hidden dark:block"></i>
+</button>
+<main class="max-w-3xl mx-auto px-6 pt-28">
+<a href="../index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回個人空間</a>
+<div class="mt-6 mb-10 rounded-xl p-6" style="background:#99f6e4;color:#1e293b">
+<h1 class="text-3xl font-extrabold mb-2">虛擬歌手創作</h1>
+<p style="color:#334155">Vocaloid 與虛擬人聲軟體的創作與心得。</p>
+<p class="text-sm mt-3" style="color:#475569">共 5 篇</p>
+</div>
+<div class="grid gap-4"><a href="../../blog/posts/490.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="虛擬歌手創作" data-year="2023" data-text="嘗試玩下買來的虛擬人聲軟體 最近買了synthesizer v studio pro這個虛擬人聲歌唱軟體來玩，順便用他附贈的聲庫mai測試，發現這時代ai技術對聲音的調教，真的是屌打過去我年輕時一時衝動做的作品，下面是我用mai試唱的句子。 (內容有涉獵hololive虛擬妹子的應該都懂xd) 我大概是在研究所的時代，迷上日本niconico的初音創作熱潮，所以曾用utau試做了兩個作品扔上去，分別是重音tedo唱的日文歌曲…"><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2023-02-02</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">虛擬歌手創作</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">嘗試玩下買來的虛擬人聲軟體</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">最近買了Synthesizer V Studio Pro這個虛擬人聲歌唱軟體來玩，順便用他附贈的聲庫Mai測試，發現這時代AI技術對聲音的調教，真的是屌打過去我年輕時一時衝動做的作…</p></a>
+<a href="../../blog/posts/4.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="虛擬歌手創作" data-year="2009" data-text="出了...居然要出了@@ 沒想到初音未來的world is mine經典背景圖要出人形了@@... 感動落淚阿 必買必買啦..."><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2009-04-01</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">虛擬歌手創作</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">出了...居然要出了@@</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">沒想到初音未來的world is mine經典背景圖要出人形了@@... 感動落淚阿 必買必買啦...</p></a>
+<a href="../../blog/posts/6.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="虛擬歌手創作" data-year="2008" data-text="鏡音鈴蓮合唱的心與心.奇蹟 這版的是兩首合起來的版本... 之後我會上傳這個版本的歌曲..."><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2008-08-05</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">虛擬歌手創作</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">鏡音鈴蓮合唱的心與心.奇蹟</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">這版的是兩首合起來的版本... 之後我會上傳這個版本的歌曲...</p></a>
+<a href="../../blog/posts/5.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="虛擬歌手創作" data-year="2008" data-text="鏡音鈴蓮的心與心.奇蹟 這是我非常喜歡的一個作品... 他的故事很摧淚... 讀者要從上至下看... 這兩首歌分別叫作心(鏡音鈴主唱)與心.奇蹟(鏡音蓮主唱)... 這故事的內容第一部先是說明一個女孩子機器人獲得了心,回想起過去發明自己的人與所有的記憶... 她能感受的到高興與悲傷,且希望將自己的感受寄托在歌唱之中... 但是因為心的悲傷對她來說是太大的負擔... 因此最後她停止運作了,但是是帶著微笑如同天使一般... …"><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2008-08-05</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">虛擬歌手創作</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">鏡音鈴蓮的心與心.奇蹟</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">這是我非常喜歡的一個作品... 他的故事很摧淚... 讀者要從上至下看... 這兩首歌分別叫作心(鏡音鈴主唱)與心.奇蹟(鏡音蓮主唱)... 這故事的內容第一部先是說明一個女孩子機…</p></a>
+<a href="../../blog/posts/9.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="虛擬歌手創作" data-year="2008" data-text="vocaloid全家族及亞北與弱音 這是niconico動畫網上一個很可愛的同人動畫... 恰好可以介紹vocaloid的眾成員... 其前後兩首音樂與舞蹈分別是採keroro軍曹片尾曲與caramellm樂團的歌曲caramelldansen作改編的... 首先是綠色頭髮的這位,是最有人氣的初音ミク(初音未來)... 其次是金頭髮的姊弟兩位,是鏡音鈴與鏡音蓮... 後續出場的兩位(一藍一紅頭髮的)分別是大哥kaito與大姐meik…"><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2008-08-03</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">虛擬歌手創作</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">Vocaloid全家族及亞北與弱音</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">這是niconico動畫網上一個很可愛的同人動畫... 恰好可以介紹Vocaloid的眾成員... 其前後兩首音樂與舞蹈分別是採keroro軍曹片尾曲與Caramellm樂團的歌曲…</p></a></div>
+</main>
+<footer class="bg-slate-100 dark:bg-slate-950 py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
+<div class="max-w-6xl mx-auto px-6 lg:px-8 text-sm text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row justify-between gap-2">
+<span>© 2026 JPK Lab. All rights reserved.</span><a href="../../index.html" class="hover:text-sky-500">← 回到首頁</a>
+</div></footer>
+<script>
+(function () {
+  var el = document.documentElement;
+  try {
+    if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) el.classList.remove('dark'); else el.classList.add('dark');
+  } catch (e) { el.classList.add('dark'); }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    el.classList.toggle('dark');
+    try { localStorage.theme = el.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+  });
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>碎碎唸 | JP 的個人空間</title>
+<meta name="description" content="對遊戲業、AI 與創作的一些想法。">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class' }</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; } .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.post-body { font-size: 1.08rem; line-height: 2; }
+.post-body p { margin: 0 0 1.4em; overflow-wrap: anywhere; }
+.post-body h2, .post-body h3, .post-body h4 { font-weight: 700; margin: 2em 0 .8em; color: inherit; }
+.post-body h2 { font-size: 1.5rem; } .post-body h3 { font-size: 1.25rem; }
+.post-body ul, .post-body ol { margin: 0 0 1.4em 1.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+.post-body li { margin: .3em 0; }
+.post-body a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.post-body hr { margin: 2em 0; border-color: rgba(148,163,184,.4); }
+.post-body blockquote { border-left: 3px solid #38bdf8; padding-left: 1em; margin: 0 0 1.4em; opacity: .85; }
+.post-body .note { font-size: .875rem; opacity: .6; border-top: 1px dashed rgba(148,163,184,.5); padding-top: 1em; margin-top: 2em; }
+</style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white relative bg-slate-50 text-slate-700 dark:bg-[#0f172a] dark:text-slate-300 transition-colors duration-500">
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-sky-400/20 dark:bg-sky-600/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+</div>
+<header class="fixed w-full top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-6xl mx-auto px-6 lg:px-8"><div class="flex items-center justify-between h-16">
+<a href="../../index.html" class="hidden sm:block font-bold text-xl tracking-wider text-slate-900 dark:text-white">JPK<span class="text-sky-500 dark:text-sky-400"> Lab</span></a>
+<nav><ul class="flex space-x-4 sm:space-x-5 md:space-x-8 text-[13px] sm:text-sm font-medium">
+<li><a href="../../index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
+<li><a href="../../resume.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">成員專長</a></li>
+<li><a href="../../portfolio/index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">成員作品</a></li>
+<li><a href="../../blog/index.html" class="text-sky-600 dark:text-sky-400 font-semibold">成員個人空間</a></li>
+</ul></nav>
+</div></div></header>
+<button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-300 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-all focus:outline-none group" title="切換深淺色">
+<i class="fas fa-sun text-xl block dark:hidden"></i><i class="fas fa-moon text-xl hidden dark:block"></i>
+</button>
+<main class="max-w-3xl mx-auto px-6 pt-28">
+<a href="../index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回個人空間</a>
+<div class="mt-6 mb-10 rounded-xl p-6" style="background:#fbcfe8;color:#1e293b">
+<h1 class="text-3xl font-extrabold mb-2">碎碎唸</h1>
+<p style="color:#334155">對遊戲業、AI 與創作的一些想法。</p>
+<p class="text-sm mt-3" style="color:#475569">共 4 篇</p>
+</div>
+<div class="grid gap-4"><a href="../../blog/posts/604.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="碎碎唸" data-year="2023" data-text="是結果重要，還是過程重要？ 接續曾經提到的ai發展議題，這次就來討論下，所謂的創作，到底是結果重要，還是過程重要？ 其實這個議題沒有所謂的標準答案，因為不同的對象有不同的需求，所以就會有不同的評價。但今天倘若加入了ai代工這個變數，這事情恐怕就不再是能這樣輕易區分了。 我舉個例子來說，以藝術創作為例，到底是學畫跟作畫的過程有價值，還是成品有價值呢？我相信兩派的人各有各的說法，那當然也有兩者都有價值的支持者。 但是一旦加入了a…"><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2023-02-05</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">碎碎唸</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">是結果重要，還是過程重要？</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">接續曾經提到的AI發展議題，這次就來討論下，所謂的創作，到底是結果重要，還是過程重要？ 其實這個議題沒有所謂的標準答案，因為不同的對象有不同的需求，所以就會有不同的評價。但今天倘若…</p></a>
+<a href="../../blog/posts/568.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="碎碎唸" data-year="2023" data-text="是為了麵包，還是已成習慣？ 生活的奴性，是為了麵包？還是已成習慣？ 這是一個最近我一直在思考的議題。 隨波逐流的我 我是一個一輩子都隨波逐流的人，家裡沒有甚麼經濟壓力(但我自己有)，家庭教育上也只告訴我要聽話，要往公職發展，畢竟我的父母都是幾乎一輩子的公職人員，所以我也沒有甚麼懷疑。直到我讀高中開始，我發現不太會準備考試的我(尤其是背誦跟要填寫標準答案時)，又同時是一個沒甚麼競爭得失心的人，在直升學制度中很常失利。 學校的科…"><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2023-02-03</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">碎碎唸</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">是為了麵包，還是已成習慣？</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">生活的奴性，是為了麵包？還是已成習慣？ 這是一個最近我一直在思考的議題。 隨波逐流的我 我是一個一輩子都隨波逐流的人，家裡沒有甚麼經濟壓力(但我自己有)，家庭教育上也只告訴我要聽話…</p></a>
+<a href="../../blog/posts/357.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="碎碎唸" data-year="2022" data-text="對ai發展的想法 近日最爭議的話題之一，莫過於ai應用的發展了，無論是對話、美術成品、文案成品、產出程式碼、虛擬人聲歌唱等，也因此出現了兩派人，一派是怕被ai取代的專業工作者，而另一派則是將ai作為應用工具或娛樂的一群人，無論哪一方的支持或反對論調，在我自己的認知上，都是對的，但也是錯的，因為不同的ai發展進度，會有不一樣程度的影響，導致雙方提出的結果都有存在跟消失的時期。 ai發展的現階段進度，大概處於應用階段，…"><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2022-12-17</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">碎碎唸</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">對AI發展的想法</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">近日最爭議的話題之一，莫過於AI應用的發展了，無論是對話、美術成品、文案成品、產出程式碼、虛擬人聲歌唱等，也因此出現了兩派人，一派是怕被AI取代的專業工作者，而另一派則是將AI作為…</p></a>
+<a href="../../blog/posts/84.html" class="post-card block glass rounded-2xl p-6 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-white/10 hover:border-sky-400/60 shadow-sm transition-all" data-cat="碎碎唸" data-year="2022" data-text="遊戲業流浪多年隨想(僅個人猜想，自說自話) 在遊戲業打滾了應該有9年多，歷經了pc單機、pc線上、頁遊、手遊的時代，也滾過營運企劃、研發企劃、產品專員幾個職務，看著台灣遊戲業從自製單機到代理營運、外資進駐協作開發，直到遊戲排行上幾乎看不到國產商品的興衰，這些年究竟發生了甚麼變化呢？ 我這邊以產品管理的觀點出發，推測以下幾個因素： 1. 技術力優勢不再 2. 對市場走向的理解落後 3. 沒有擴展全球市場的能力 4. 資本額的差距 5. 缺少商…"><div class="flex flex-wrap items-center gap-3 mb-2 text-sm text-slate-500 dark:text-slate-400"><time>2022-08-19</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">碎碎唸</span></div><h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">遊戲業流浪多年隨想(僅個人猜想，自說自話)</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed">在遊戲業打滾了應該有9年多，歷經了PC單機、PC線上、頁遊、手遊的時代，也滾過營運企劃、研發企劃、產品專員幾個職務，看著台灣遊戲業從自製單機到代理營運、外資進駐協作開發，直到遊戲排…</p></a></div>
+</main>
+<footer class="bg-slate-100 dark:bg-slate-950 py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
+<div class="max-w-6xl mx-auto px-6 lg:px-8 text-sm text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row justify-between gap-2">
+<span>© 2026 JPK Lab. All rights reserved.</span><a href="../../index.html" class="hover:text-sky-500">← 回到首頁</a>
+</div></footer>
+<script>
+(function () {
+  var el = document.documentElement;
+  try {
+    if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) el.classList.remove('dark'); else el.classList.add('dark');
+  } catch (e) { el.classList.add('dark'); }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    el.classList.toggle('dark');
+    try { localStorage.theme = el.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+  });
+})();
+</script>
+
+</body></html>

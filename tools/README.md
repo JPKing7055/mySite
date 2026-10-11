@@ -41,7 +41,7 @@ python3 tools/build_blog.py
 ```
 - 文章資料：`tools/posts.json`（欄位：id、date、category、title、md、media）
 - 設定：`tools/blog_config.json`
-  - `hidden_ids`：不顯示的文章 id（網站上會消失，但 posts.json 裡仍有資料）
+  - `hidden_ids`：不顯示的文章 id（網站上會消失，但 posts.json 裡仍有資料）。**儲存庫是公開的，不想讓人看到的文章不要放進 posts.json**，私人文章只留在 Notion（狀態不要設「待發布」）
   - `category_labels`：分類顯示名稱（例如「未分類」顯示為「早期舊文」）
   - `category_order`：分類排序
 - 腳本會重建 `blog/` 底下的 `index.html`、`all.html`、`zone/*.html`、`posts/*.html`，不會動首頁和其他頁面。

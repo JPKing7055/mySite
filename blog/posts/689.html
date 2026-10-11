@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YT即時翻譯+大綱彙整 | JP 的個人空間</title>
+<meta name="description" content="2026-10-11 目前已完成 本機網頁版與 LINE 個人使用 MVP，手機貼 YouTube 網址後，可取得中文摘要與外語學習卡。 - 字幕功能：支援常見…">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class' }</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; } .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.post-body { font-size: 1.08rem; line-height: 2; }
+.post-body p { margin: 0 0 1.4em; overflow-wrap: anywhere; }
+.post-body h2, .post-body h3, .post-body h4 { font-weight: 700; margin: 2em 0 .8em; color: inherit; }
+.post-body h2 { font-size: 1.5rem; } .post-body h3 { font-size: 1.25rem; }
+.post-body ul, .post-body ol { margin: 0 0 1.4em 1.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
+.post-body li { margin: .3em 0; }
+.post-body a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.post-body hr { margin: 2em 0; border-color: rgba(148,163,184,.4); }
+.post-body blockquote { border-left: 3px solid #38bdf8; padding-left: 1em; margin: 0 0 1.4em; opacity: .85; }
+.post-body .note { font-size: .875rem; opacity: .6; border-top: 1px dashed rgba(148,163,184,.5); padding-top: 1em; margin-top: 2em; }
+</style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white relative bg-slate-50 text-slate-700 dark:bg-[#0f172a] dark:text-slate-300 transition-colors duration-500">
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-sky-400/20 dark:bg-sky-600/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-400/20 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+</div>
+<header class="fixed w-full top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-6xl mx-auto px-6 lg:px-8"><div class="flex items-center justify-between h-16">
+<a href="../../index.html" class="hidden sm:block font-bold text-xl tracking-wider text-slate-900 dark:text-white">JPK<span class="text-sky-500 dark:text-sky-400"> Lab</span></a>
+<nav><ul class="flex space-x-4 sm:space-x-5 md:space-x-8 text-[13px] sm:text-sm font-medium">
+<li><a href="../../index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">首頁</a></li>
+<li><a href="../../resume.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">成員專長</a></li>
+<li><a href="../../portfolio/index.html" class="text-slate-600 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 transition-colors">成員作品</a></li>
+<li><a href="../../blog/index.html" class="text-sky-600 dark:text-sky-400 font-semibold">成員個人空間</a></li>
+</ul></nav>
+</div></div></header>
+<button id="theme-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-300 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-all focus:outline-none group" title="切換深淺色">
+<i class="fas fa-sun text-xl block dark:hidden"></i><i class="fas fa-moon text-xl hidden dark:block"></i>
+</button>
+<main class="max-w-3xl mx-auto px-6 pt-28">
+<a href="../index.html" class="text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500"><i class="fas fa-arrow-left mr-1"></i>返回個人空間</a>
+<article class="mt-6">
+<div class="flex flex-wrap items-center gap-3 mb-3 text-sm text-slate-500 dark:text-slate-400"><time>2026-10-11</time><span class="inline-block text-xs px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">AI創作</span></div>
+<h1 class="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white leading-snug mb-8">YT即時翻譯+大綱彙整</h1>
+<div class="post-body text-slate-700 dark:text-slate-300">
+<p>2026-10-11</p>
+<p>目前已完成 <strong>本機網頁版與 LINE 個人使用 MVP</strong>，手機貼 YouTube 網址後，可取得中文摘要與外語學習卡。</p>
+<ul><li><strong>字幕功能</strong>：支援常見 YouTube 網址、中文優先與其他語言回退、全文顯示及文字下載。</li><li><strong>Gemini 處理</strong>：中文主題摘要、學習卡、原句核對與影片時間跳轉；網頁支援列印／另存 PDF。</li><li><strong>LINE 串接</strong>：已完成 LINE 串接，可手機使用。</li><li><strong>資料保護</strong>：YT的一些規範比較麻煩，所以預計測試版收尾後，使用付費API來確保AI廠商必須遵守不使用資料作訓練的規則。</li></ul>
+<p>下一階段尚未實作的是：<strong>長影片分段分析、依內容關聯跨段統整成中文導覽，再選主題深入翻譯與學習</strong>，並加入字幕暫存、進度保存及額度限制後續作。Google Cloud 部署也尚未進行，雲端跟YT要原文資料會被擋，就算是GCP也不行，還得思考怎麼辦…</p>
+
+</div>
+</article>
+<nav class="mt-14 pt-6 border-t border-slate-200 dark:border-slate-700 grid sm:grid-cols-2 gap-4 text-sm"><a href="688.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400"><span class="text-slate-500 dark:text-slate-400">← 上一篇</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">多鄰Walk</span></a><a href="690.html" class="block p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-400 sm:text-right"><span class="text-slate-500 dark:text-slate-400">下一篇 →</span><br><span class="font-semibold text-slate-800 dark:text-slate-100">DD不分類</span></a></nav>
+</main>
+<footer class="bg-slate-100 dark:bg-slate-950 py-10 border-t border-slate-200 dark:border-slate-800 mt-16">
+<div class="max-w-6xl mx-auto px-6 lg:px-8 text-sm text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row justify-between gap-2">
+<span>© 2026 JPK Lab. All rights reserved.</span><a href="../../index.html" class="hover:text-sky-500">← 回到首頁</a>
+</div></footer>
+<script>
+(function () {
+  var el = document.documentElement;
+  try {
+    if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) el.classList.remove('dark'); else el.classList.add('dark');
+  } catch (e) { el.classList.add('dark'); }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    el.classList.toggle('dark');
+    try { localStorage.theme = el.classList.contains('dark') ? 'dark' : 'light'; } catch (e) {}
+  });
+})();
+</script>
+
+</body></html>

@@ -31,9 +31,15 @@ def inline(t):
     return md.renderInline(t)
 
 
+IMG_DIR = Path(__file__).resolve().parent.parent / "blog" / "img"
+# 內文裡單獨一行 [圖:檔名.png] 或 [圖:檔名.png|圖說] 會顯示 blog/img/ 裡的圖片
+IMG_RE = re.compile(r"^\[圖[:：]\s*([A-Za-z0-9_.\-]+\.(?:png|jpe?g|gif|webp))\s*(?:[|｜]\s*([^\]]*))?\]$", re.I)
+
+
 def render_body(p):
     tight = p["date"] < "2020"  # old diary posts: keep line breaks inside one paragraph
     out, buf, items, kind = [], [], [], None
+    p["_imgs"] = 0
 
     def flush_p():
         if buf:
@@ -50,6 +56,16 @@ def render_body(p):
         s = raw.rstrip()
         if s == "<empty-block/>" or not s:
             flush_list(); flush_p(); continue
+        mi = IMG_RE.match(s)
+        if mi:
+            flush_list(); flush_p()
+            fn, cap = mi.group(1), (mi.group(2) or "").strip()
+            if not (IMG_DIR / fn).exists():
+                print(f"WARNING: post {p['id']} ({p['title']}): image not found: blog/img/{fn}")
+            cap_html = f"<figcaption>{esc(cap)}</figcaption>" if cap else ""
+            out.append(f'<figure><img src="../img/{esc(fn)}" alt="{esc(cap)}" loading="lazy">{cap_html}</figure>')
+            p["_imgs"] += 1
+            continue
         if s.startswith('<span color="gray">'):
             flush_list(); flush_p()
             t = re.sub(r"</?span[^>]*>", "", s)
@@ -84,7 +100,7 @@ def render_body(p):
 
 
 def excerpt(p, n=90):
-    t = " ".join(l for l in p["md"].split("\n") if l and not l.startswith("<") and not l.startswith("\\[youtube"))
+    t = " ".join(l for l in p["md"].split("\n") if l and not l.startswith("<") and not l.startswith("[圖") and not l.startswith("\\[youtube"))
     t = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", t)
     t = re.sub(r"[\\*~`#>]|^- ", "", t)
     t = re.sub(r"https?://\S+", "", t).strip()
@@ -113,6 +129,8 @@ body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
 .post-body ul, .post-body ol { margin: 0 0 1.4em 1.5em; } .post-body ul { list-style: disc; } .post-body ol { list-style: decimal; }
 .post-body li { margin: .3em 0; }
 .post-body a { color: #0ea5e9; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.post-body figure { margin: 0 0 1.6em; } .post-body figure img { max-width: 100%; height: auto; border-radius: .75rem; border: 1px solid rgba(148,163,184,.3); }
+.post-body figcaption { font-size: .875rem; opacity: .65; margin-top: .5em; text-align: center; }
 .post-body hr { margin: 2em 0; border-color: rgba(148,163,184,.4); }
 .post-body blockquote { border-left: 3px solid #38bdf8; padding-left: 1em; margin: 0 0 1.4em; opacity: .85; }
 .post-body .note { font-size: .875rem; opacity: .6; border-top: 1px dashed rgba(148,163,184,.5); padding-top: 1em; margin-top: 2em; }
@@ -257,7 +275,7 @@ def build_posts():
 <h1 class="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white leading-snug mb-8">{esc(p['title'])}</h1>
 <div class="post-body text-slate-700 dark:text-slate-300">
 {render_body(p)}
-{('<p class="note">本篇原文附有 %d 張圖片或影片，尚未移轉到這裡。</p>' % p['media']) if p.get('media') else ''}
+{('<p class="note">本篇原文附有 %d 張圖片或影片，尚未移轉到這裡。</p>' % (p['media'] - p.get('_imgs', 0))) if p.get('media', 0) - p.get('_imgs', 0) > 0 else ''}
 </div>
 </article>
 {nav}

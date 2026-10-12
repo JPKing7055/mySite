@@ -1,5 +1,9 @@
 {
   "hidden_ids": [],
+  "groups": [
+    "工作與創作",
+    "興趣與生活"
+  ],
   "category_labels": {},
   "category_order": [
     "虛擬歌手創作",
@@ -24,49 +28,14 @@
   },
   "zones": [
     {
-      "slug": "vocal",
-      "name": "虛擬歌手創作",
+      "slug": "ai",
+      "name": "AI創作",
       "categories": [
-        "虛擬歌手創作"
+        "AI創作"
       ],
-      "color": "#99f6e4",
-      "summary": "Vocaloid 與虛擬人聲軟體的創作與心得。"
-    },
-    {
-      "slug": "fitness",
-      "name": "運動健身",
-      "categories": [
-        "運動健身"
-      ],
-      "color": "#fdba74",
-      "summary": "忘了練胸，待補"
-    },
-    {
-      "slug": "language",
-      "name": "外語學習",
-      "categories": [
-        "外語學習"
-      ],
-      "color": "#fde047",
-      "summary": "YT轉譯小工具，每日一詞讚"
-    },
-    {
-      "slug": "life",
-      "name": "生活記事",
-      "categories": [
-        "生活記事"
-      ],
-      "color": "#bbf7d0",
-      "summary": "日常生活的碎片與隨手記錄。"
-    },
-    {
-      "slug": "murmur",
-      "name": "碎碎唸",
-      "categories": [
-        "碎碎唸"
-      ],
-      "color": "#fbcfe8",
-      "summary": "對遊戲業、AI 與創作的一些想法。"
+      "color": "#c7d2fe",
+      "summary": "多鄰Walk給Gemini Canvas跑移動跟事件觸發、事件完成測試，Life BGM進行AI自主生成開發",
+      "group": "工作與創作"
     },
     {
       "slug": "study",
@@ -75,7 +44,28 @@
         "專業學習"
       ],
       "color": "#bfdbfe",
-      "summary": "專業相關的學習與練習紀錄。"
+      "summary": "專業相關的學習與練習紀錄。",
+      "group": "工作與創作"
+    },
+    {
+      "slug": "language",
+      "name": "外語學習",
+      "categories": [
+        "外語學習"
+      ],
+      "color": "#fde047",
+      "summary": "YT轉譯小工具，每日一詞讚",
+      "group": "工作與創作"
+    },
+    {
+      "slug": "vocal",
+      "name": "虛擬歌手創作",
+      "categories": [
+        "虛擬歌手創作"
+      ],
+      "color": "#99f6e4",
+      "summary": "Vocaloid 與虛擬人聲軟體的創作與心得。",
+      "group": "工作與創作"
     },
     {
       "slug": "games",
@@ -84,25 +74,28 @@
         "遊戲試玩"
       ],
       "color": "#ddd6fe",
-      "summary": "興趣使然的遊戲試玩與評測。"
+      "summary": "興趣使然的遊戲試玩與評測。",
+      "group": "工作與創作"
     },
     {
-      "slug": "vtuber",
-      "name": "Vtuber廢片",
+      "slug": "murmur",
+      "name": "碎碎唸",
       "categories": [
-        "Vtuber廢片"
+        "碎碎唸"
       ],
-      "color": "#fecdd3",
-      "summary": "狗子今日熱門"
+      "color": "#fbcfe8",
+      "summary": "對遊戲業、AI 與創作的一些想法。",
+      "group": "工作與創作"
     },
     {
-      "slug": "ai",
-      "name": "AI創作",
+      "slug": "fitness",
+      "name": "運動健身",
       "categories": [
-        "AI創作"
+        "運動健身"
       ],
-      "color": "#c7d2fe",
-      "summary": "多鄰Walk給Gemini Canvas跑移動跟事件觸發、事件完成測試，Life BGM進行AI自主生成開發"
+      "color": "#fdba74",
+      "summary": "忘了練胸，待補",
+      "group": "興趣與生活"
     },
     {
       "slug": "nutrition",
@@ -111,7 +104,8 @@
         "營養學"
       ],
       "color": "#d9f99d",
-      "summary": "上過的營養學分課快忘光了"
+      "summary": "上過的營養學分課快忘光了",
+      "group": "興趣與生活"
     },
     {
       "slug": "farmer",
@@ -120,7 +114,8 @@
         "當個農夫"
       ],
       "color": "#d6c8a4",
-      "summary": "閒閒找東西種"
+      "summary": "閒閒找東西種",
+      "group": "興趣與生活"
     },
     {
       "slug": "explore",
@@ -129,7 +124,28 @@
         "探索世界"
       ],
       "color": "#a5f3fc",
-      "summary": "這次要到哪裡呢？"
+      "summary": "這次要到哪裡呢？",
+      "group": "興趣與生活"
+    },
+    {
+      "slug": "life",
+      "name": "生活記事",
+      "categories": [
+        "生活記事"
+      ],
+      "color": "#bbf7d0",
+      "summary": "日常生活的碎片與隨手記錄。",
+      "group": "興趣與生活"
+    },
+    {
+      "slug": "vtuber",
+      "name": "Vtuber廢片",
+      "categories": [
+        "Vtuber廢片"
+      ],
+      "color": "#fecdd3",
+      "summary": "狗子今日熱門",
+      "group": "興趣與生活"
     }
   ]
 }

@@ -317,16 +317,34 @@ def build_home():
             f'<div class="flex items-center gap-2 mb-4 text-sky-600 dark:text-sky-400 font-semibold tracking-wide"><i class="fas fa-bolt"></i><span>{esc(now["title"])}</span></div>'
             f'{body_html}<p class="text-sm text-slate-500 dark:text-slate-400 mt-4">更新於 {esc(now["updated"])}</p></section>'
         )
-    notes = []
-    for z in zones:
+    def note_html(z):
         zp = zone_posts(z)
         style = f'style="--bg:{z["color"]}"'
         if zp:
             meta = f'<div class="meta"><span>{len(zp)} 篇</span><span>最近 {zp[0]["date"]}</span></div>'
-            notes.append(f'<a href="zone/{z["slug"]}.html" class="note" {style}><h3>{esc(z["name"])}</h3><p>{esc(z["summary"])}</p>{meta}</a>')
-        else:
-            meta = '<div class="meta"><span>尚無文章</span></div>'
-            notes.append(f'<div class="note empty" {style}><h3>{esc(z["name"])}</h3><p>{esc(z["summary"])}</p>{meta}</div>')
+            return f'<a href="zone/{z["slug"]}.html" class="note" {style}><h3>{esc(z["name"])}</h3><p>{esc(z["summary"])}</p>{meta}</a>'
+        meta = '<div class="meta"><span>尚無文章</span></div>'
+        return f'<div class="note empty" {style}><h3>{esc(z["name"])}</h3><p>{esc(z["summary"])}</p>{meta}</div>'
+
+    # Group zones (config "groups" gives the order; each zone's "group" picks its section).
+    group_names = list(cfg.get("groups", []))
+    for z in zones:
+        g = z.get("group", "")
+        if g not in group_names:
+            if g: print(f"WARNING: zone '{z['name']}' group '{g}' is not listed in config 'groups'")
+            group_names.append(g)
+    sections = []
+    for i, g in enumerate(group_names):
+        gz = [z for z in zones if z.get("group", "") == g]
+        if not gz: continue
+        hint = '<span class="text-sm text-slate-500 dark:text-slate-400">點便條紙進去看文章</span>' if not sections else ""
+        title = esc(g) if g else "專區"
+        sections.append(
+            f'<section class="{"mt-14" if sections else ""}">'
+            f'<div class="flex items-end justify-between mb-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white">{title}</h2>{hint}</div>'
+            f'<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 pt-3">{"".join(note_html(z) for z in gz)}</div>'
+            '</section>'
+        )
     body = f"""<main class="max-w-5xl mx-auto px-6 pt-28">
 <div class="text-center mb-10">
 <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">JP 的個人空間</h1>
@@ -335,12 +353,7 @@ def build_home():
 </div>
 {NOTE_CSS}
 {now_html}
-<section>
-<div class="flex items-end justify-between mb-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white">專區</h2><span class="text-sm text-slate-500 dark:text-slate-400">點便條紙進去看文章</span></div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 pt-3">
-{"".join(notes)}
-</div>
-</section>
+{"".join(sections)}
 <div class="text-center mt-16"><a href="all.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-medium transition-all shadow-lg">查看全部 {len(posts)} 篇文章 <i class="fas fa-arrow-right"></i></a></div>
 </main>
 """

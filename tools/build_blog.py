@@ -100,7 +100,8 @@ def render_body(p):
 
 
 def excerpt(p, n=90):
-    t = " ".join(l for l in p["md"].split("\n") if l and not l.startswith("<") and not l.startswith("[圖") and not l.startswith("\\[youtube"))
+    t = " ".join(l for l in p["md"].split("\n") if l and not l.startswith("<empty-block") and not l.startswith("<span color") and not l.startswith("[圖") and not l.startswith("\\[youtube"))
+    t = re.sub(r"<[^>]+>", " ", t)  # 內文裡的 <strong>、<br> 等標籤不要露在摘要裡
     t = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", t)
     t = re.sub(r"[\\*~`#>]|^- ", "", t)
     t = re.sub(r"https?://\S+", "", t).strip()

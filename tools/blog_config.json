@@ -1,8 +1,6 @@
 {
   "hidden_ids": [],
-  "category_labels": {
-    "未分類": "早期舊文"
-  },
+  "category_labels": {},
   "category_order": [
     "虛擬歌手創作",
     "專業學習",
@@ -15,8 +13,7 @@
     "AI創作",
     "營養學",
     "當個農夫",
-    "探索世界",
-    "未分類"
+    "探索世界"
   ],
   "now": {
     "title": "現在在做的事",
@@ -133,15 +130,6 @@
       ],
       "color": "#a5f3fc",
       "summary": "這次要到哪裡呢？"
-    },
-    {
-      "slug": "archive",
-      "name": "舊文存檔",
-      "categories": [
-        "未分類"
-      ],
-      "color": "#e7e5e4",
-      "summary": "2006～2010 年的舊部落格日記，從 WordPress 搬回來。"
     }
   ]
 }

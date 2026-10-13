@@ -36,7 +36,9 @@ IMG_DIR = Path(__file__).resolve().parent.parent / "blog" / "img"
 IMG_RE = re.compile(r"^\[圖[:：]\s*([A-Za-z0-9_.\-]+\.(?:png|jpe?g|gif|webp))\s*(?:[|｜]\s*([^\]]*))?\]$", re.I)
 
 
-def render_body(p):
+def render_body(p, img_dir=None, img_src="../img/", where="blog/img"):
+    """img_dir／img_src／where：內文圖片的資料夾、網頁上的相對路徑、警告訊息用的名稱（作品頁會改用 portfolio/img）。"""
+    img_dir = img_dir or IMG_DIR
     tight = p["date"] < "2020"  # old diary posts: keep line breaks inside one paragraph
     out, buf, items, kind = [], [], [], None
     p["_imgs"] = 0
@@ -60,10 +62,10 @@ def render_body(p):
         if mi:
             flush_list(); flush_p()
             fn, cap = mi.group(1), (mi.group(2) or "").strip()
-            if not (IMG_DIR / fn).exists():
-                print(f"WARNING: post {p['id']} ({p['title']}): image not found: blog/img/{fn}")
+            if not (img_dir / fn).exists():
+                print(f"WARNING: {p['id']} ({p['title']}): image not found: {where}/{fn}")
             cap_html = f"<figcaption>{esc(cap)}</figcaption>" if cap else ""
-            out.append(f'<figure><img src="../img/{esc(fn)}" alt="{esc(cap)}" loading="lazy">{cap_html}</figure>')
+            out.append(f'<figure><img src="{img_src}{esc(fn)}" alt="{esc(cap)}" loading="lazy">{cap_html}</figure>')
             p["_imgs"] += 1
             continue
         if s.startswith('<span color="gray">'):
@@ -383,5 +385,6 @@ def build_zones():
         (d / f"{z['slug']}.html").write_text(page(f"{z['name']} | JP 的個人空間", z["summary"], "../../", body), encoding="utf8")
 
 
-build_all(); build_home(); build_zones(); build_posts()
-print(f"built {len(posts)} posts")
+if __name__ == "__main__":
+    build_all(); build_home(); build_zones(); build_posts()
+    print(f"built {len(posts)} posts")

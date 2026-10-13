@@ -7,13 +7,13 @@
 |---|---|---|
 | 首頁 | `index.html` | 手寫。品牌區、研究與服務方向（4 張卡片）、成員（JP）、專業服務（目前是預留空位）。不放部落格內容，其他頁面從導覽列進入 |
 | 成員專長（履歷） | `resume.html` | 手寫。身份背景、職責貢獻、專業技能、核心優勢 |
-| 成員作品（作品集） | `portfolio/index.html` | 手寫。目前是「整理中」，檔案內的 HTML 註解有作品卡片範本；截圖放 `portfolio/img/` |
+| 成員作品（作品集） | `portfolio/index.html`、`portfolio/{網址代稱}.html` | 外框手寫；`<!-- WORKS:START -->` 到 `<!-- WORKS:END -->` 之間的卡片與每個作品的案例頁由腳本從 Notion「作品」資料庫產生，**不要手改**，見下面「成員作品」一節 |
 | 專業服務 | `index.html` 的 `#services` 區塊 | 目前只有「服務項目準備中」的預留空位，之後在這裡放服務項目卡片 |
 | 成員個人空間（部落格） | `blog/` | 腳本產生。第一頁「JP 的個人空間」＝「現在在做的事」大區塊＋便條紙牆（每張便條紙是一個專區）；`blog/zone/*.html` 是各專區內頁；`blog/all.html` 是全部文章（搜尋、分類篩選）；`blog/posts/*.html` 是文章 |
 
 成員專長、成員作品兩頁的大標用成員代稱（現在是「JP 的專長」「JP 的作品」），不要跟導覽列文字重複；之後每位成員各有一組頁面時，也照這個命名。
 
-導覽列在 `index.html`、`resume.html`、`portfolio/index.html` 各自手寫一份，部落格頁面的導覽列寫在 `tools/build_blog.py` 的 `HEAD`。新增或改名頁面時，這四處要一起改。
+導覽列在 `index.html`、`resume.html`、`portfolio/index.html` 各自手寫一份，部落格頁面與作品案例頁的導覽列寫在 `tools/build_blog.py` 的 `HEAD`（案例頁會自動把高亮換成「成員作品」）。新增或改名頁面時，這四處要一起改。
 
 品牌名是「JPK Lab」（遊戲化思維實驗室）。成員只用代稱（目前只有 JP），不放本名。首頁受眾是合作與服務對象，部落格則是純興趣、研究與生活分享。新增成員時，複製首頁 `#members` 裡的 `<article>` 卡片即可。
 
@@ -36,12 +36,36 @@ Notion 資料庫「部落格文章」（在「我的簡介」頁面下）是寫�
 - 新增分類：Notion 的 `分類` 選項、`blog_config.json` 的 `zones` 與 `category_order` 三處要一起加。
 - 舊的 `初音V家`、`虛擬創作` 分類已合併成「虛擬歌手創作」，Notion 裡這兩個選項沒有文章了。
 
+## 成員作品（從 Notion 同步）
+Notion「作品」資料庫（在「我的簡介」頁面下）是維護作品的地方。每個作品＝一頁：**欄位放卡片摘要，頁面內文寫短案例**，詳細的開發過程留在部落格，用「相關文章」連過去。
+
+| 欄位 | 說明 |
+|---|---|
+| 作品名稱 | 卡片與案例頁的標題 |
+| 一句話說明 | 卡片簡介，一到兩句（必填） |
+| 專案進度 | 概念驗證／開發中／測試中／已上線／已結案。照實標示 |
+| 技術與工具 | 標籤 |
+| 網址代稱 | 案例頁網址用，只能英文小寫、數字、連字號，例如 `life-opera`（必填，不能是 `index`、`img`） |
+| 顯示順序 | 數字小的排前面 |
+| 成品連結、GitHub 連結 | 選填，只接受 `https://`，會顯示在卡片與案例頁 |
+| 相關文章 | 連到「部落格文章」資料庫的開發過程文章；案例頁底部會列出，**只列出已經在網站上的文章** |
+| 網站顯示 | 草稿＝不上網；**待發布或已發布＝同意公開** |
+
+流程：
+1. 在 Notion 寫好作品頁，確認內容沒有金鑰、帳號、真實使用者資料、前雇主內部資訊後，把 `網站顯示` 改成「待發布」。
+2. 同步：Actions →「同步 Notion 文章」→ Run workflow（文章與作品一起同步）。
+3. 之後改內容：在 Notion 直接改，再按一次同步。**下架**：把 `網站顯示` 改回「草稿」再同步，案例頁與它的圖片會一併清掉（作品是整批以 Notion 為準，不需要請 Claude 手動移除）。
+- 作品頁的圖片：Notion 頁面裡放的圖片區塊會自動下載、縮圖、移除 EXIF，存成 `portfolio/img/w-{網址代稱}-{8碼}.jpg/png`；內文裡單獨一行 `[圖:檔名|圖說]` 也有效，找不到時會從 `blog/img/` 複製一份。手動放進 `portfolio/img/` 的圖不會被動到。
+- 保護機制：作品資料庫讀不到（例如還沒把整合加進這個資料庫）時，網站上的作品維持原樣，並讓這次同步顯示失敗；查到 0 筆但網站已有作品時也不會整批清空；單一作品名稱、說明或代稱不合格時，只略過那一個，並寫在 Summary 的「作品需要處理」。
+- 重建作品頁：`python3 tools/build_works.py`（需要 `pip install markdown-it-py`）。資料在 `tools/works.json`（由同步產生，不要手改）。
+- 作品卡片的第一張圖會當縮圖；沒有圖就顯示預設圖示。
+
 ## 自動同步（GitHub Actions）
-檔案：`.github/workflows/sync-notion.yml`（流程）、`tools/sync_notion.py`（腳本）、`tools/test_sync_notion.py`（離線測試，不連網）。
+檔案：`.github/workflows/sync-notion.yml`（流程）、`tools/sync_notion.py`（腳本）、`tools/test_sync_notion.py`（離線測試，不連網，涵蓋文章與作品）。
 
 **一次性設定（本人要做）**
 1. 到 https://www.notion.so/profile/integrations 建立「內部整合」，權限只勾「讀取內容」（唯讀），複製金鑰。
-2. 打開 Notion「部落格文章」資料庫，右上角 ⋯ → 連線（Connections）→ 加入剛建立的整合。沒分享給它的頁面它看不到。
+2. 打開 Notion「部落格文章」資料庫，右上角 ⋯ → 連線（Connections）→ 加入剛建立的整合。沒分享給它的頁面它看不到。**「作品」資料庫也要做同樣的連線**（它是獨立的資料庫，不會跟著繼承）。
 3. GitHub 儲存庫 → Settings → Secrets and variables → Actions → New repository secret，名稱填 `NOTION_TOKEN`，內容貼上金鑰。**金鑰只放這裡，不要貼到對話、檔案或儲存庫。**
 
 **每次使用**
@@ -84,7 +108,7 @@ python3 tools/build_blog.py
   - `hidden_ids`：不顯示的文章 id（網站上會消失，但 posts.json 裡仍有資料）。**儲存庫是公開的，不想讓人看到的文章不要放進 posts.json**，私人文章只留在 Notion（狀態不要設「待發布」）
   - `category_labels`：分類顯示名稱（目前沒有設定任何改名）
   - `category_order`：分類排序
-- 腳本會重建 `blog/` 底下的 `index.html`、`all.html`、`zone/*.html`、`posts/*.html`，不會動首頁和其他頁面。
+- 腳本會重建 `blog/` 底下的 `index.html`、`all.html`、`zone/*.html`、`posts/*.html`，不會動首頁和其他頁面。作品頁另外用 `python3 tools/build_works.py` 重建（GitHub 按鈕同步時兩個都會跑）。
 
 ## 新增一篇文章
 在 `tools/posts.json` 加一筆：`id`（不可重複的整數）、`date`（YYYY-MM-DD）、`category`、`title`、`md`（內文，一行一段，空行用 `<empty-block/>`）、`media`（略過的圖片數，沒有填 0）。再執行上面的建置指令。

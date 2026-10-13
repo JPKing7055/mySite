@@ -50,6 +50,9 @@ jobs:
       - name: 重建部落格
         run: python3 tools/build_blog.py
 
+      - name: 重建成員作品頁
+        run: python3 tools/build_works.py
+
       - name: 試跑模式說明
         if: ${{ inputs.dry_run }}
         run: echo "### 試跑模式：以上結果沒有提交，網站沒有任何變動。" >> "$GITHUB_STEP_SUMMARY"
@@ -60,12 +63,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A tools/posts.json blog
+          git add -A tools/posts.json tools/works.json blog portfolio
           if git diff --cached --quiet; then
             echo "沒有變動，不需要提交。"
             exit 0
           fi
-          git commit -m "Sync Notion posts" -m "$(git diff --cached --shortstat)"
+          git commit -m "Sync Notion posts and works" -m "$(git diff --cached --shortstat)"
           git pull --rebase origin main
           git push origin HEAD:main
           echo "pushed=true" >> "$GITHUB_OUTPUT"

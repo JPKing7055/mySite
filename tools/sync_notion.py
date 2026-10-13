@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
-"""從 Notion「部落格文章」資料庫同步文章到 tools/posts.json，並把文章裡的圖片存進 blog/img/。
+"""從 Notion 同步網站內容：
+1. 「部落格文章」資料庫 → tools/posts.json，文章裡的圖片存進 blog/img/。
+2. 「作品」資料庫 → tools/works.json（成員作品頁），作品頁裡的圖片存進 portfolio/img/。
 
-規則（完整說明見 tools/README.md）：
+部落格文章的規則（完整說明見 tools/README.md）：
 - 狀態＝「待發布」且還不在 posts.json 的頁面 → 新增。
 - 已在 posts.json（有 notion 欄位）、狀態是「待發布」或「已發布」的頁面 → 在 Notion 被編輯過就更新，
   或用環境變數 RESYNC 指定（例如 "688,705" 或 "all"）強制重新同步。
 - 其他頁面（例如只留在 Notion 的舊文、私人文章）一律不會被加進來。
-- 唯讀：這個腳本只讀 Notion，不會改 Notion 的任何內容。
+
+作品的規則：
+- 「網站顯示」是「待發布」或「已發布」的作品會出現在網站，每次同步都以 Notion 為準整批重建 works.json。
+- 改成「草稿」（或刪掉）的作品，下次同步就會從網站拿掉，它的圖片也會一併清掉。
+- 作品資料庫讀不到時（例如還沒把整合加進資料庫），works.json 維持原樣，只在 Summary 提醒。
+
+唯讀：這個腳本只讀 Notion，不會改 Notion 的任何內容。
 
 環境變數：
   NOTION_TOKEN            必填。Notion 內部整合的金鑰（放在 GitHub Secrets，不要寫進程式）
   NOTION_DATA_SOURCE_ID   選填。預設是「部落格文章」資料來源
+  NOTION_WORKS_DATA_SOURCE_ID  選填。預設是「作品」資料來源
   NOTION_VERSION          選填。預設 2025-09-03
   RESYNC                  選填。逗號分隔的文章 id，或 all
   SYNC_ROOT               選填。專案根目錄（測試用）
@@ -23,6 +32,7 @@ import io
 import json
 import os
 import re
+import shutil
 import sys
 import time
 import hashlib
@@ -32,14 +42,24 @@ from pathlib import Path
 
 ROOT = Path(os.environ.get("SYNC_ROOT") or Path(__file__).resolve().parent.parent)
 POSTS_PATH = ROOT / "tools" / "posts.json"
+WORKS_PATH = ROOT / "tools" / "works.json"
 CFG_PATH = ROOT / "tools" / "blog_config.json"
 IMG_DIR = ROOT / "blog" / "img"
+WORKS_IMG_DIR = ROOT / "portfolio" / "img"
 
 DATA_SOURCE = os.environ.get("NOTION_DATA_SOURCE_ID", "89785077-cd87-4fbd-b55a-53b0631df9a7")
+WORKS_DATA_SOURCE = os.environ.get("NOTION_WORKS_DATA_SOURCE_ID", "43db433a-787f-4682-8193-17920774bbed")
 NOTION_VERSION = os.environ.get("NOTION_VERSION", "2025-09-03")
 
 P_TITLE, P_CATEGORY, P_STATUS, P_DATE = "標題", "分類", "狀態", "發布日期"
 S_PUBLISH, S_LIVE = "待發布", "已發布"
+
+# 作品資料庫的欄位名稱
+W_TITLE, W_SUMMARY, W_PROGRESS, W_SHOW = "作品名稱", "一句話說明", "專案進度", "網站顯示"
+W_SLUG, W_TAGS, W_ORDER = "網址代稱", "技術與工具", "顯示順序"
+W_LIVE, W_GITHUB, W_RELATED = "成品連結", "GitHub 連結", "相關文章"
+SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9\-]{0,59}$")
+RESERVED_SLUGS = {"index", "img"}
 
 MAX_IMAGE_BYTES = 25 * 1024 * 1024
 MAX_WIDTH = 1600
@@ -111,13 +131,14 @@ def list_children(block_id):
         cursor = r.get("next_cursor")
 
 
-def all_pages():
+def all_pages(data_source=None):
+    data_source = data_source or DATA_SOURCE
     pages, cursor = [], None
     while True:
         body = {"page_size": 100}
         if cursor:
             body["start_cursor"] = cursor
-        r = notion("POST", f"/data_sources/{DATA_SOURCE}/query", body)
+        r = notion("POST", f"/data_sources/{data_source}/query", body)
         pages += r.get("results", [])
         if not r.get("has_more"):
             break
@@ -127,8 +148,8 @@ def all_pages():
 
 # ───────────────────────── 屬性 ─────────────────────────
 
-def prop_title(page):
-    p = (page.get("properties") or {}).get(P_TITLE) or {}
+def prop_title(page, name=None):
+    p = (page.get("properties") or {}).get(name or P_TITLE) or {}
     return "".join(r.get("plain_text", "") for r in p.get("title", [])).strip()
 
 
@@ -142,6 +163,31 @@ def prop_date(page, name):
     p = (page.get("properties") or {}).get(name) or {}
     d = p.get("date")
     return d["start"][:10] if d and d.get("start") else None
+
+
+def prop_text(page, name):
+    p = (page.get("properties") or {}).get(name) or {}
+    return "".join(r.get("plain_text", "") for r in p.get("rich_text", [])).strip()
+
+
+def prop_multi(page, name):
+    p = (page.get("properties") or {}).get(name) or {}
+    return [o["name"].strip() for o in p.get("multi_select", []) if o.get("name", "").strip()]
+
+
+def prop_number(page, name):
+    p = (page.get("properties") or {}).get(name) or {}
+    return p.get("number")
+
+
+def prop_url(page, name):
+    p = (page.get("properties") or {}).get(name) or {}
+    return (p.get("url") or "").strip()
+
+
+def prop_relation_ids(page, name):
+    p = (page.get("properties") or {}).get(name) or {}
+    return [r["id"] for r in p.get("relation", []) if r.get("id")]
 
 
 # ───────────────────────── 文字轉 Markdown ─────────────────────────
@@ -204,17 +250,18 @@ def guard(line):
 
 # ───────────────────────── 圖片 ─────────────────────────
 
-def process_image(data, stem):
+def process_image(data, stem, img_dir=None):
     """縮到 1600px 內、移除 EXIF（含 GPS）、壓到約 1MB；回傳存好的檔名。"""
     from PIL import Image, ImageOps
+    img_dir = img_dir or IMG_DIR
     im = Image.open(io.BytesIO(data))
     fmt = (im.format or "").upper()
-    IMG_DIR.mkdir(parents=True, exist_ok=True)
+    img_dir.mkdir(parents=True, exist_ok=True)
     if fmt == "GIF" and getattr(im, "n_frames", 1) > 1:  # 動圖：保留原檔
         if len(data) > 8 * 1024 * 1024:
             raise SyncError("動圖超過 8MB")
         name = stem + ".gif"
-        (IMG_DIR / name).write_bytes(data)
+        (img_dir / name).write_bytes(data)
         return name
     im = ImageOps.exif_transpose(im)
     if im.width > MAX_WIDTH:
@@ -222,7 +269,7 @@ def process_image(data, stem):
     has_alpha = im.mode in ("RGBA", "LA", "PA") or "transparency" in im.info
     if has_alpha:
         name = stem + ".png"
-        im.convert("RGBA").save(IMG_DIR / name, "PNG", optimize=True)
+        im.convert("RGBA").save(img_dir / name, "PNG", optimize=True)
         return name
     rgb = im.convert("RGB")
     name = stem + ".jpg"
@@ -232,17 +279,19 @@ def process_image(data, stem):
         cur.save(buf, "JPEG", quality=quality, optimize=True, progressive=True)
         if buf.tell() <= TARGET_BYTES:
             break
-    (IMG_DIR / name).write_bytes(buf.getvalue())
+    (img_dir / name).write_bytes(buf.getvalue())
     return name
 
 
-def save_image(post_id, url):
-    key = hashlib.sha1(url.split("?")[0].encode("utf8")).hexdigest()[:8]  # 同一張圖網址（去掉簽名）固定同一個檔名
-    stem = f"p{post_id}-{key}"
-    existing = sorted(IMG_DIR.glob(stem + ".*")) if IMG_DIR.exists() else []
+def save_image(prefix, url, img_dir=None):
+    """prefix：文章是 p{id}，作品是 w-{slug}。同一張圖網址（去掉簽名）固定同一個檔名。"""
+    img_dir = img_dir or IMG_DIR
+    key = hashlib.sha1(url.split("?")[0].encode("utf8")).hexdigest()[:8]
+    stem = f"{prefix}-{key}"
+    existing = sorted(img_dir.glob(stem + ".*")) if img_dir.exists() else []
     if existing:
         return existing[0].name
-    return process_image(http_get(url), stem)
+    return process_image(http_get(url), stem, img_dir)
 
 
 # ───────────────────────── 區塊轉文章 ─────────────────────────
@@ -252,8 +301,11 @@ SKIP_TYPES = {"child_page", "child_database", "link_to_page", "table_of_contents
 
 
 class Conv:
-    def __init__(self, post_id):
+    def __init__(self, post_id, img_dir=None):
         self.post_id = post_id
+        # 圖檔名前綴：文章是 p{id}，作品傳進來的是 "w-{slug}"
+        self.prefix = post_id if isinstance(post_id, str) else f"p{post_id}"
+        self.img_dir = img_dir
         self.lines, self.notices, self.used = [], [], set()
         self.media = 0
 
@@ -346,7 +398,7 @@ class Conv:
             self.note("有一張圖片找不到網址，已略過")
             return
         try:
-            name = save_image(self.post_id, src)
+            name = save_image(self.prefix, src, self.img_dir)
         except Exception as e:  # 單張圖片失敗不要中斷整篇
             self.note(f"有一張圖片處理失敗（{e if isinstance(e, SyncError) else type(e).__name__}），已略過")
             return
@@ -362,8 +414,8 @@ class Conv:
         return "\n".join(lines)
 
 
-def convert_page(page, post_id):
-    c = Conv(post_id)
+def convert_page(page, post_id, img_dir=None):
+    c = Conv(post_id, img_dir)
     c.walk(list_children(page["id"]))
     return c
 
@@ -377,6 +429,126 @@ def cleanup_orphans(post_id, used):
                 f.unlink()
                 removed.append(f.name)
     return removed
+
+
+# ───────────────────────── 作品 ─────────────────────────
+
+MANAGED_IMG_RE = re.compile(r"^(?:w-[a-z0-9\-]+|p\d+)-[0-9a-f]{8}\.[A-Za-z0-9]+$")  # 腳本產生的圖檔；其餘視為手動上傳
+
+
+def md_images(md):
+    out = []
+    for ln in md.split("\n"):
+        m = IMG_RE.match(ln.strip())
+        if m:
+            out.append(m.group(1))
+    return out
+
+
+def dump_works(works):
+    return json.dumps(works, ensure_ascii=False, indent=1) + "\n"
+
+
+def https_link(u):
+    return u if u and u.lower().startswith("https://") and link_ok(u) else ""
+
+
+def sync_works(force):
+    """以 Notion「作品」資料庫為準，整批重建 works.json。回傳 (新增, 更新, 下架, 問題, 提醒, 掃描筆數)。"""
+    added, updated, removed, problems, notices = [], [], [], [], []
+    raw = WORKS_PATH.read_text(encoding="utf8") if WORKS_PATH.exists() else "[]\n"
+    old = json.loads(raw)
+    prev = {w["notion"]: w for w in old if w.get("notion")}
+    try:
+        pages = all_pages(WORKS_DATA_SOURCE)
+    except SyncError as e:
+        problems.append(f"作品資料庫讀取失敗，網站上的作品維持原樣：{e}（請確認已在 Notion「作品」資料庫的 ⋯ → 連線 加入這個整合）")
+        return added, updated, removed, problems, notices, 0
+    if not pages and old:
+        problems.append("作品資料庫查到 0 筆，但網站上已有作品；為免誤刪，作品維持原樣。要全部下架請先把網站顯示改成草稿")
+        return added, updated, removed, problems, notices, 0
+
+    works, used, slugs = [], set(), set()
+    live = [p for p in pages if prop_select(p, W_SHOW) in (S_PUBLISH, S_LIVE)]
+    live.sort(key=lambda p: (prop_number(p, W_ORDER) if prop_number(p, W_ORDER) is not None else 9999, prop_title(p, W_TITLE)))
+    for page in live:
+        title = prop_title(page, W_TITLE)
+        label = title or page["id"]
+        slug = prop_text(page, W_SLUG)
+        old_w = prev.get(page["id"])
+
+        def keep_old(why):
+            problems.append(f"「{label}」{why}")
+            if old_w and old_w["slug"] not in slugs:
+                works.append(old_w)
+                slugs.add(old_w["slug"])
+                used.update(md_images(old_w["md"]))
+
+        if not title:
+            problems.append(f"有一個作品沒有名稱，已略過（{page['id']}）")
+            continue
+        if not SLUG_RE.match(slug) or slug in RESERVED_SLUGS:
+            keep_old(f"的「網址代稱」不合格（只能用英文小寫、數字、連字號，不能是 index 或 img），已略過")
+            continue
+        if slug in slugs:
+            problems.append(f"「{label}」的網址代稱「{slug}」重複，已略過")
+            continue
+        summary = prop_text(page, W_SUMMARY)
+        if not summary:
+            keep_old("沒有填「一句話說明」，已略過")
+            continue
+        edited = page.get("last_edited_time", "")
+        unchanged = (old_w and old_w.get("notion_edited") == edited and old_w["slug"] == slug and force != "all"
+                     and (not isinstance(force, set) or slug not in force))
+        if unchanged:
+            w = old_w
+            used.update(md_images(w["md"]))
+        else:
+            try:
+                conv = convert_page(page, "w-" + slug, WORKS_IMG_DIR)
+            except SyncError as e:
+                keep_old(f"讀取失敗：{e}")
+                continue
+            md = conv.result()
+            if not md:
+                keep_old("內容是空的，已略過")
+                continue
+            for name in md_images(md):  # 在 Notion 手寫的 [圖:檔名]：作品頁自己留一份，不依賴部落格的圖檔
+                dst = WORKS_IMG_DIR / name
+                src = IMG_DIR / name
+                if not dst.exists() and src.exists():
+                    WORKS_IMG_DIR.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(src, dst)
+                if not dst.exists():
+                    conv.note(f"找不到圖檔 {name}（portfolio/img 與 blog/img 都沒有）")
+                conv.used.add(name)
+            used.update(conv.used)
+            for n in conv.notices:
+                notices.append(f"作品「{label}」：{n}")
+            w = {"slug": slug, "title": title, "summary": summary,
+                 "progress": prop_select(page, W_PROGRESS) or "",
+                 "tags": prop_multi(page, W_TAGS), "order": prop_number(page, W_ORDER),
+                 "live": https_link(prop_url(page, W_LIVE)), "github": https_link(prop_url(page, W_GITHUB)),
+                 "related": prop_relation_ids(page, W_RELATED), "md": md,
+                 "notion": page["id"], "notion_edited": edited}
+            print(f"作品：{title}（{slug}，圖片 {len(md_images(md))} 張）")
+        works.append(w)
+        slugs.add(slug)
+        if not old_w:
+            added.append(title)
+        elif not unchanged and any(old_w.get(k) != w.get(k) for k in w if k != "notion_edited"):
+            updated.append(title)
+    kept = {w["notion"] for w in works}
+    removed = [o["title"] for o in old if o.get("notion") not in kept]
+
+    new_text = dump_works(works)
+    if new_text != raw:
+        WORKS_PATH.write_text(new_text, encoding="utf8")
+    if WORKS_IMG_DIR.exists():  # 只清腳本自己產生、而且已不被任何上線作品使用的圖
+        for f in WORKS_IMG_DIR.iterdir():
+            if f.is_file() and MANAGED_IMG_RE.match(f.name) and f.name not in used:
+                f.unlink()
+    return added, updated, removed, problems, notices, len(pages)
 
 
 # ───────────────────────── 主流程 ─────────────────────────
@@ -487,11 +659,13 @@ def main():
     if new_text != raw_posts:
         POSTS_PATH.write_text(new_text, encoding="utf8")
 
-    write_summary(added, updated, problems, baselined, notices, len(pages))
-    return 1 if any("讀取失敗" in p for p in problems) else 0
+    w_added, w_updated, w_removed, w_problems, w_notices, w_pages = sync_works(force)
+    write_summary(added, updated, problems, baselined, notices, len(pages),
+                  (w_added, w_updated, w_removed, w_problems, w_notices, w_pages))
+    return 1 if any("讀取失敗" in p for p in problems + w_problems) else 0
 
 
-def write_summary(added, updated, problems, baselined, notices, n_pages):
+def write_summary(added, updated, problems, baselined, notices, n_pages, works=None):
     L = ["## Notion 同步結果", "", f"- 掃描 Notion 頁面：{n_pages} 筆",
          f"- 新增文章：{len(added)} 篇", f"- 更新文章：{len(updated)} 篇"]
     for title, items in (("新增", added), ("更新", updated)):
@@ -503,7 +677,19 @@ def write_summary(added, updated, problems, baselined, notices, n_pages):
         L += ["", "### 提醒"] + [f"- {n}" for n in notices]
     if problems:
         L += ["", "### 需要處理"] + [f"- {p}" for p in problems]
-    if not (added or updated or problems):
+    if works:
+        wa, wu, wr, wp, wn, wpages = works
+        L += ["", "### 作品", "", f"- 掃描作品頁面：{wpages} 筆",
+              f"- 新增作品：{len(wa)} 個", f"- 更新作品：{len(wu)} 個", f"- 下架作品：{len(wr)} 個"]
+        for tag, items in (("新增", wa), ("更新", wu), ("下架", wr)):
+            L += [f"  - {tag}：{t}" for t in items]
+        if wn:
+            L += ["", "作品提醒："] + [f"- {n}" for n in wn]
+        if wp:
+            L += ["", "作品需要處理："] + [f"- {p}" for p in wp]
+        if not (wa or wu or wr or wp):
+            L += ["", "作品沒有變動。"]
+    if not (added or updated or problems) and not works:
         L += ["", "沒有需要同步的新內容。"]
     text = "\n".join(L) + "\n"
     print("\n" + text)

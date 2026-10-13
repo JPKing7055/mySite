@@ -58,6 +58,19 @@ body { font-family: 'Inter', 'Noto Sans TC', sans-serif; overflow-x: hidden; }
 <p>2026-10-13</p>
 <p>炸，YT自己搞一套超隱密的摘要功能，而且問AI還是在2023年-2024年就已經存在，我做的東東只剩Line bot跟外語學習小卡的差異了，忽然感覺可以結案了wwww</p>
 <figure><img src="../img/p689-6df9ce17.jpg" alt="" loading="lazy"></figure>
+<p>2026-10-13</p>
+<p><a href="https://youtu.be/LwOVtWBchvQ?si=n2MbF6P1gX1o-fzs">https://youtu.be/LwOVtWBchvQ?si=n2MbF6P1gX1o-fzs</a></p>
+<p>剛好今天看的文章拿來測試這個小工具，不比較沒有傷害wwww<br><br><strong>這是YT內建Gemini的摘要功能結果</strong></p>
+<p>在這段訪談中，曾預測 2008 年金融危機的基金經理人 Steve Eisman 對當前的 AI 熱潮提出了觀點。他強調了以下幾個核心風險與現狀：</p>
+<ul><li><strong>集中度風險 (Concentration Risk)：</strong> Eisman 指出 Nvidia 與大型雲端服務供應商（如微軟、Google、Meta 等）的收入高度依賴 OpenAI 與 Anthropic。若這兩家 AI 公司營運出現問題，整個供應鏈將面臨連鎖反應 (<a href="https://www.youtube.com/watch?t=54s">00:54</a> - <a href="https://www.youtube.com/watch?t=390s">06:30</a>)。</li><li><strong>缺乏護城河 (Lack of Moats)：</strong> 他認為 AI 模型領域目前競爭激烈且沒有傳統意義上的「護城河」，企業與開發者容易隨時轉換模型 (<a href="https://www.youtube.com/watch?t=545s">09:05</a> - <a href="https://www.youtube.com/watch?t=698s">11:38</a>)。</li><li><strong>末日論的質疑：</strong> Eisman 認為 AI 公司頻繁提及「AI 末日風險」是一種策略，目的是希望政府透過監管來建立法律門檻，進而阻擋競爭對手，創造出人為的護城河 (<a href="https://www.youtube.com/watch?t=698s">11:38</a> - <a href="https://www.youtube.com/watch?t=855s">14:15</a>)。</li><li><strong>能源瓶頸：</strong> 對於 AI 基礎設施，他認為電力供應是美國面臨的重大挑戰。像 GE Vernova 這樣的能源公司正因數據中心對電力的巨大需求而受益，且訂單滿載 (<a href="https://www.youtube.com/watch?t=1261s">21:01</a> - <a href="https://www.youtube.com/watch?t=1590s">26:30</a>)。</li></ul>
+<p>最後，針對這是否為 1999 年網路泡沫重演的提問，Eisman 表示目前下定論還太早 (<a href="https://www.youtube.com/watch?t=1623s">27:03</a> - <a href="https://www.youtube.com/watch?t=1651s">27:31</a>)。</p>
+<p><strong>這是小工具MVP的功能結果</strong></p>
+<p>發現一個很麻煩的問題，就是文字給Gemini處理時，很常會出現HTTP503的錯誤，就AI不理人，所以大量字幕的影片需要多次分批給Gemini處理時，幾乎必失敗。然後學習卡有Bug，有空再來處理(也可能不管了)，但HTTP503這個問題，就讓我有點不想接續這個功能開發，畢竟我也沒法控Gemini的心情..XD</p>
+<p>主題重點</p>
+<p>AI 產業鏈的集中風險<br>訪談指出，整條 AI 產業鏈從輝達、各大雲端業者（如微軟、亞馬遜、Google、Oracle）到基礎設施，其龐大營收與未交付訂單（RPO）有極高比例集中在 Anthropic 與 OpenAI 兩家公司上。由於這兩家公司目前仍處於鉅額虧損與燃燒資金的狀態，若其未來成長不如預期或資金斷鏈，將對整體市場造成巨大的連鎖衝擊。<br>0:56 <a href="https://www.youtube.com/watch?v=LwOVtWBchvQ&amp;t=56s">https://www.youtube.com/watch?v=LwOVtWBchvQ&amp;t=56s</a></p>
+<p>模型供應商缺乏護城河與市場轉變<br>AI 模型供應商面臨沒有護城河的困境，客戶缺乏忠誠度且隨時會轉向效能更好或更便宜的替代方案（如中國的開放權重模型）。過去盛行的「tokenmaxxing」（無節制消耗 token）現象已隨成本壓力及漲價而降溫，企業對成本變得敏感，不再盲目砸大錢。<br>9:25 <a href="https://www.youtube.com/watch?v=LwOVtWBchvQ&amp;t=565s">https://www.youtube.com/watch?v=LwOVtWBchvQ&amp;t=565s</a></p>
+<p>AI 末日論與法規監管的質疑<br>講者認為，部分 AI 企業大肆宣揚「AI 將毀滅世界」或呼籲放慢發展速度，其實是一種製造恐慌的策略。其真正目的是希望藉由政府法規與管制來築起法律的高牆，排除如中國開放權重模型等競爭對手，藉此創造兩家獨大並鞏固自身地位。<br>12:00 <a href="https://www.youtube.com/watch?v=LwOVtWBchvQ&amp;t=720s">https://www.youtube.com/watch?v=LwOVtWBchvQ&amp;t=720s</a></p>
+<p>電力與基礎設施的挑戰<br>除了晶片與資金，美國面臨嚴重的電力短缺問題。由於資料中心耗電量巨大，加上電網建設緩慢，帶動了發電設備與燃氣渦輪機製造商（如 GE Vernova）的需求暴增，訂單甚至已經排到 2035 年左右。<br>20:54 <a href="https://www.youtube.com/watch?v=LwOVtWBchvQ&amp;t=1254s">https://www.youtube.com/watch?v=LwOVtWBchvQ&amp;t=1254s</a></p>
 
 </div>
 </article>

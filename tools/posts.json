@@ -7,7 +7,7 @@
   "media": 3,
   "md": "2026-10-11\n用Google AI Studio搞一個雛形，僅有初步構想，可愛的人際網狀圖，在考慮是不是要做個角色扮演模擬人生的AI應用，讓每天都有一些日常驚喜。<br><br>或許可以做成聯絡人、通訊錄為主，自訂角色扮演為輔的應用？但是要真實的關係，還是要虛構的關係比較有趣還在糾結中。\n一般人可能就輸入個跟自己的關係，朋友間的關係，但這樣比較難產出驚喜的故事，但如果是填虛構的關係，就會失去人際網的原生意義。<br><br>所以做成兩套共存嗎？感覺操作會好複雜…\n[圖:p706-c8e4d0fc.png]\n[圖:p706-bf9537d1.png]\n[圖:p706-6500c454.png]\n2026-10-13\n感覺我先做個Hololive或V家的當範例自娛好了，看看怎麼樣比較有趣，然後要再做甚麼開發。",
   "notion": "3f6c9f2a-f247-80d0-9725-c02ae95309ad",
-  "notion_edited": "2026-10-13T07:51:00.000Z"
+  "notion_edited": "2026-10-13T12:00:00.000Z"
  },
  {
   "id": 705,
@@ -17,7 +17,7 @@
   "media": 4,
   "md": "2026-10-11\n專案改名Life Opera了，但標題就先不動，想省AI Token來產劇本以為未來的成本考量，結果用便宜的AI，產出劇情實在是微妙，且不穩定，或是很尬。\n[圖:p705-f40730aa.png]\n[圖:p705-880e6633.png]\n目前已完成 AI 短歌劇的核心生成流程，並部署到雲端，進入受限測試階段。\n- <strong>AI 創作流程</strong>：先構思完整故事，再改編成角色台詞與歌唱演出，搭配精選案例改善故事因果、笑點與收尾。\n- <strong>演出功能</strong>：目前支援四位角色、八句歌詞、約 22 秒的短歌劇，整合音樂、角色動作與舞台呈現。\n- <strong>穩定性保護</strong>：加入登入驗證、使用額度、成本控管及重複請求防護；生成失敗時保留上一份可播放作品。\n- <strong>雲端驗收</strong>：已完成登入、實際生成與完整播放測試，311 項自動化回歸測試通過。\n- <strong>品質與成本</strong>：最新案例整體約 70 分，經觀眾回饋局部修訂後獲得認可；該次生成成本估算約 US$0.0037，低於目前設定的目標，雲端運行費用另計。\n- <strong>版本管理</strong>：開發成果與工作文件已整理、提交並推送。\n接下來優先準備成果報告，持續累積觀眾回饋與改善生成品質；公開使用前補齊驗證，有餘裕再探索 LINE Bot 串接。\n2026-10-13\n慘不忍睹，我覺得這次專案應該來不及做到品質，頂多做到不要產出失敗被打0分…XD<br>為了趕工還搞了一堆分身，最終還是得建紙娃娃資料庫跟RAG，還要程式做最後一層審核，就算結果很爛還是得產出。\n不能完全依賴AI的創作，AI在字數控制時會容易出錯，然後劇本的前後關係也很容易亂，新素材生成規格也會不遵守規則，不確定高階模型會不會夠穩，但太貴且用量會被限制，也是不保險。\n[圖:p705-1a3406d2.png]\n[圖:p705-265f1264.png]",
   "notion": "3f6c9f2a-f247-8019-8570-e05ddfaa44a5",
-  "notion_edited": "2026-10-13T07:48:00.000Z"
+  "notion_edited": "2026-10-13T12:00:00.000Z"
  },
  {
   "id": 704,
@@ -155,9 +155,9 @@
   "date": "2026-10-11",
   "category": "外語學習",
   "media": 0,
-  "md": "2026-10-11\n[https://youtu.be/qz_DC_NEkvw?si=PXxfl2k_6ocyohdl](https://youtu.be/qz_DC_NEkvw?si=PXxfl2k_6ocyohdl)\n先從這個首頁開始，後續有新的學習就會更新",
+  "md": "2026-10-11\n[https://youtu.be/qz\\_DC\\_NEkvw?si=PXxfl2k\\_6ocyohdl](https://youtu.be/qz_DC_NEkvw?si=PXxfl2k_6ocyohdl)\n先從這個首頁開始，後續有新的學習就會更新\n2026-10-13\n[https://www.youtube.com/live/3\\_zygdIHA10?si=fkmtC4F5SzcGqHV8](https://www.youtube.com/live/3_zygdIHA10?si=fkmtC4F5SzcGqHV8)\n還是要假裝有讀一下",
   "notion": "3f6c9f2a-f247-80ac-a805-e799ee0a655a",
-  "notion_edited": "2026-10-11T16:13:00.000Z"
+  "notion_edited": "2026-10-13T13:59:00.000Z"
  },
  {
   "id": 690,
@@ -175,9 +175,9 @@
   "date": "2026-10-11",
   "category": "AI創作",
   "media": 1,
-  "md": "2026-10-11\n目前已完成 <strong>本機網頁版與 LINE 個人使用 MVP</strong>，手機貼 YouTube 網址後，可取得中文摘要與外語學習卡。\n- <strong>字幕功能</strong>：支援常見 YouTube 網址、中文優先與其他語言回退、全文顯示及文字下載。\n- <strong>Gemini 處理</strong>：中文主題摘要、學習卡、原句核對與影片時間跳轉；網頁支援列印／另存 PDF。\n- <strong>LINE 串接</strong>：已完成 LINE 串接，可手機使用。\n- <strong>資料保護</strong>：YT的一些規範比較麻煩，所以預計測試版收尾後，使用付費API來確保AI廠商必須遵守不使用資料作訓練的規則。\n下一階段尚未實作的是：<strong>長影片分段分析、依內容關聯跨段統整成中文導覽，再選主題深入翻譯與學習</strong>，並加入字幕暫存、進度保存及額度限制後續作。Google Cloud 部署也尚未進行，雲端跟YT要原文資料會被擋，就算是GCP也不行，還得思考怎麼辦…\n<empty-block/>\n2026-10-13\n炸，YT自己搞一套超隱密的摘要功能，而且問AI還是在2023年-2024年就已經存在，我做的東東只剩Line bot跟外語學習小卡的差異了，忽然感覺可以結案了wwww\n[圖:p689-6df9ce17.jpg]",
+  "md": "2026-10-11\n目前已完成 <strong>本機網頁版與 LINE 個人使用 MVP</strong>，手機貼 YouTube 網址後，可取得中文摘要與外語學習卡。\n- <strong>字幕功能</strong>：支援常見 YouTube 網址、中文優先與其他語言回退、全文顯示及文字下載。\n- <strong>Gemini 處理</strong>：中文主題摘要、學習卡、原句核對與影片時間跳轉；網頁支援列印／另存 PDF。\n- <strong>LINE 串接</strong>：已完成 LINE 串接，可手機使用。\n- <strong>資料保護</strong>：YT的一些規範比較麻煩，所以預計測試版收尾後，使用付費API來確保AI廠商必須遵守不使用資料作訓練的規則。\n下一階段尚未實作的是：<strong>長影片分段分析、依內容關聯跨段統整成中文導覽，再選主題深入翻譯與學習</strong>，並加入字幕暫存、進度保存及額度限制後續作。Google Cloud 部署也尚未進行，雲端跟YT要原文資料會被擋，就算是GCP也不行，還得思考怎麼辦…\n<empty-block/>\n2026-10-13\n炸，YT自己搞一套超隱密的摘要功能，而且問AI還是在2023年-2024年就已經存在，我做的東東只剩Line bot跟外語學習小卡的差異了，忽然感覺可以結案了wwww\n[圖:p689-6df9ce17.jpg]\n<empty-block/>\n2026-10-13\n[https://youtu.be/LwOVtWBchvQ?si=n2MbF6P1gX1o-fzs](https://youtu.be/LwOVtWBchvQ?si=n2MbF6P1gX1o-fzs)\n剛好今天看的文章拿來測試這個小工具，不比較沒有傷害wwww<br><br><strong>這是YT內建Gemini的摘要功能結果</strong>\n在這段訪談中，曾預測 2008 年金融危機的基金經理人 Steve Eisman 對當前的 AI 熱潮提出了觀點。他強調了以下幾個核心風險與現狀：\n- <strong>集中度風險 (Concentration Risk)：</strong> Eisman 指出 Nvidia 與大型雲端服務供應商（如微軟、Google、Meta 等）的收入高度依賴 OpenAI 與 Anthropic。若這兩家 AI 公司營運出現問題，整個供應鏈將面臨連鎖反應 ([00:54](https://www.youtube.com/watch?t=54s) - [06:30](https://www.youtube.com/watch?t=390s))。\n- <strong>缺乏護城河 (Lack of Moats)：</strong> 他認為 AI 模型領域目前競爭激烈且沒有傳統意義上的「護城河」，企業與開發者容易隨時轉換模型 ([09:05](https://www.youtube.com/watch?t=545s) - [11:38](https://www.youtube.com/watch?t=698s))。\n- <strong>末日論的質疑：</strong> Eisman 認為 AI 公司頻繁提及「AI 末日風險」是一種策略，目的是希望政府透過監管來建立法律門檻，進而阻擋競爭對手，創造出人為的護城河 ([11:38](https://www.youtube.com/watch?t=698s) - [14:15](https://www.youtube.com/watch?t=855s))。\n- <strong>能源瓶頸：</strong> 對於 AI 基礎設施，他認為電力供應是美國面臨的重大挑戰。像 GE Vernova 這樣的能源公司正因數據中心對電力的巨大需求而受益，且訂單滿載 ([21:01](https://www.youtube.com/watch?t=1261s) - [26:30](https://www.youtube.com/watch?t=1590s))。\n最後，針對這是否為 1999 年網路泡沫重演的提問，Eisman 表示目前下定論還太早 ([27:03](https://www.youtube.com/watch?t=1623s) - [27:31](https://www.youtube.com/watch?t=1651s))。\n<empty-block/>\n<strong>這是小工具MVP的功能結果</strong>\n發現一個很麻煩的問題，就是文字給Gemini處理時，很常會出現HTTP503的錯誤，就AI不理人，所以大量字幕的影片需要多次分批給Gemini處理時，幾乎必失敗。然後學習卡有Bug，有空再來處理(也可能不管了)，但HTTP503這個問題，就讓我有點不想接續這個功能開發，畢竟我也沒法控Gemini的心情..XD\n主題重點\nAI 產業鏈的集中風險<br>訪談指出，整條 AI 產業鏈從輝達、各大雲端業者（如微軟、亞馬遜、Google、Oracle）到基礎設施，其龐大營收與未交付訂單（RPO）有極高比例集中在 Anthropic 與 OpenAI 兩家公司上。由於這兩家公司目前仍處於鉅額虧損與燃燒資金的狀態，若其未來成長不如預期或資金斷鏈，將對整體市場造成巨大的連鎖衝擊。<br>0:56 [https://www.youtube.com/watch?v=LwOVtWBchvQ&t=56s](https://www.youtube.com/watch?v=LwOVtWBchvQ&t=56s)\n模型供應商缺乏護城河與市場轉變<br>AI 模型供應商面臨沒有護城河的困境，客戶缺乏忠誠度且隨時會轉向效能更好或更便宜的替代方案（如中國的開放權重模型）。過去盛行的「tokenmaxxing」（無節制消耗 token）現象已隨成本壓力及漲價而降溫，企業對成本變得敏感，不再盲目砸大錢。<br>9:25 [https://www.youtube.com/watch?v=LwOVtWBchvQ&t=565s](https://www.youtube.com/watch?v=LwOVtWBchvQ&t=565s)\nAI 末日論與法規監管的質疑<br>講者認為，部分 AI 企業大肆宣揚「AI 將毀滅世界」或呼籲放慢發展速度，其實是一種製造恐慌的策略。其真正目的是希望藉由政府法規與管制來築起法律的高牆，排除如中國開放權重模型等競爭對手，藉此創造兩家獨大並鞏固自身地位。<br>12:00 [https://www.youtube.com/watch?v=LwOVtWBchvQ&t=720s](https://www.youtube.com/watch?v=LwOVtWBchvQ&t=720s)\n電力與基礎設施的挑戰<br>除了晶片與資金，美國面臨嚴重的電力短缺問題。由於資料中心耗電量巨大，加上電網建設緩慢，帶動了發電設備與燃氣渦輪機製造商（如 GE Vernova）的需求暴增，訂單甚至已經排到 2035 年左右。<br>20:54 [https://www.youtube.com/watch?v=LwOVtWBchvQ&t=1254s](https://www.youtube.com/watch?v=LwOVtWBchvQ&t=1254s)",
   "notion": "3f6c9f2a-f247-8016-a016-ee87a992d26f",
-  "notion_edited": "2026-10-13T03:37:00.000Z"
+  "notion_edited": "2026-10-13T13:50:00.000Z"
  },
  {
   "id": 688,
@@ -187,7 +187,7 @@
   "media": 3,
   "md": "2026-10-11\n用Canvas先搞個雛形，大概看得懂就好了，有考慮把這玩頁拿來做團專，因為我一個人搞這規模可能會搞不定，但還是看其他人的想法…\n[圖:p688-9e17673e.png]\n[圖:p688-59525e3a.png]\n目前專案處於<strong>概念驗證與開發規劃階段，尚未開始正式開發</strong>。\n- <strong>已有概念原型</strong>：Gemini Canvas 製作的模擬地圖版本，包含角色移動、隨機事件、閱讀／填空／情境選擇題，以及完成獎勵與累積分數。已閱讀原始碼，尚未實際測試驗收。\n- <strong>已討論技術方向</strong>：可先做手機網頁；使用 Google Maps 顯示地圖，搭配自有地標資料與預先生成的 AI 題庫，減少即時查詢與出題成本。\n- <strong>已整理開發規劃</strong>：涵蓋真實定位、地標綁定、事件刷新、AI 題庫、進度保存及戶外測試。\n- <strong>尚待決定</strong>：首發測試區域、候選地標、第一版平台、學習程度與預算。\n- <strong>尚未實作</strong>：Google Maps／GPS 接入、地標資料庫、AI 出題串接、後端與正式部署。\n<strong>下一步預計：先確定一個測試區域，篩選 8～12 個地標，再定案第一版規格。</strong>\n<empty-block/>\n2026-10-13\n先讓GPT幫忙隨便挑個我有可能會經過的範圍，讓我有空能到現地看下效果，原本AI想把地點跟事件先決定，但我還是比較想先看到實際呈現的效果，所以調整的開發排程，地點跟事件決定的工量很大，我覺得短時間內比較難收尾。\n[圖:p688-3246c7a0.png]",
   "notion": "3f6c9f2a-f247-8001-ba29-dc858b4c8117",
-  "notion_edited": "2026-10-13T07:41:00.000Z"
+  "notion_edited": "2026-10-13T12:00:00.000Z"
  },
  {
   "id": 687,
@@ -309,6 +309,16 @@
   "media": 0,
   "md": "如題，又得去看醫生了，想上廁所上不出來的怪症狀，然後會腹脹，比較擔心跟我過世的阿姨、舅媽都是屬於有胃腸病症的遺傳體質。",
   "notion": "3f8c9f2a-f247-808d-9733-cc669f24d245",
-  "notion_edited": "2026-10-13T07:55:00.000Z"
+  "notion_edited": "2026-10-13T12:00:00.000Z"
+ },
+ {
+  "id": 708,
+  "title": "這個AI主題訪談真不錯",
+  "date": "2026-10-13",
+  "category": "碎碎唸",
+  "media": 0,
+  "md": "[https://youtu.be/LwOVtWBchvQ?si=n2MbF6P1gX1o-fzs](https://youtu.be/LwOVtWBchvQ?si=n2MbF6P1gX1o-fzs)<br>蠻喜歡這個受訪者的說話方式，有足夠資訊的就說結論，沒有的就說看到的現象，不會去瞎扯，也不會都只有單向的看法，而是會從不同角度去看事情。",
+  "notion": "3f8c9f2a-f247-80eb-a549-cd570f56c85b",
+  "notion_edited": "2026-10-13T14:00:00.000Z"
  }
 ]

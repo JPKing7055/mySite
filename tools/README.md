@@ -18,7 +18,7 @@
 品牌名是「JPK Lab」（遊戲化思維實驗室）。成員只用代稱（目前只有 JP），不放本名。首頁受眾是合作與服務對象，部落格則是純興趣、研究與生活分享。新增成員時，複製首頁 `#members` 裡的 `<article>` 卡片即可。
 
 ## 個人空間的版面設定（`tools/blog_config.json`）
-- `now`：「現在在做的事」區塊。`paragraphs` 第一段是大字，之後的段落是內文；`updated` 是顯示的更新日期（改內容時一起改）。
+- `now`：「現在在做的事」區塊。`paragraphs` 第一段是大字，之後的段落是內文；`updated` 是顯示的更新日期。這一塊會由「同步 Notion 文章」按鈕自動從 Notion 更新，見下面「現在在做的事（從 Notion 同步）」；手動改也可以，但下次同步會被 Notion 的內容蓋掉。
 - `groups`：便條紙牆的分組與順序（目前是「工作與創作」「興趣與生活」）。
 - `zones`：便條紙牆。每個專區有 `slug`（網址用）、`name`、`group`（屬於哪一組，要寫在 `groups` 裡）、`categories`（哪些文章分類屬於這個專區）、`color`（便條紙底色）、`summary`（便條紙上的摘要）。組內的順序就是 `zones` 裡的先後。沒有文章的專區會顯示成不能點的便條紙「尚無文章」，有文章後自動變成可點，並產生內頁。
 - 文章分類不在任何專區時，建置會印出 WARNING，文章仍會出現在 `all.html`，但便條紙牆看不到，要補一個專區。
@@ -60,12 +60,20 @@ Notion「作品」資料庫（在「我的簡介」頁面下）是維護作品�
 - 重建作品頁：`python3 tools/build_works.py`（需要 `pip install markdown-it-py`）。資料在 `tools/works.json`（由同步產生，不要手改）。
 - 作品卡片的第一張圖會當縮圖；沒有圖就顯示預設圖示。
 
+## 現在在做的事（從 Notion 同步）
+部落格第一頁最上面的大區塊，內容來自 Notion「我的簡介」底下的「現在在做的事」**頁面本身的內文**（不是外層引用的那一份；外層是同步區塊，在外層改，頁面裡的內文就會一起變）。按「同步 Notion 文章」時一起處理，不用另外操作。
+- 規則：頁面內每個有文字的區塊算一段（標題、粗體、清單都只取文字；程式碼、圖片、空行略過）。**第一段是大字，其餘是內文**，最多取 8 段。
+- 內文跟網站上不同才更新；更新日期＝Notion 最後編輯日（台北時間）。文字沒變就什麼都不動。
+- 頁面是空的（例如正在清掉重打）或讀不到時，網站上維持原樣：空的只在 Summary 提醒；讀不到會讓這次同步顯示失敗（通常是整合還沒連線到這個頁面）。
+- **一次性設定**：打開 Notion「現在在做的事」頁面，右上角 ⋯ → 連線（Connections）→ 加入同一個整合。
+- 頁面 ID 預設寫在 `tools/sync_notion.py` 的 `NOW_PAGE`（可用環境變數 `NOTION_NOW_PAGE_ID` 覆蓋）。如果把這個頁面刪掉重建，要換成新頁面的 ID。
+
 ## 自動同步（GitHub Actions）
-檔案：`.github/workflows/sync-notion.yml`（流程）、`tools/sync_notion.py`（腳本）、`tools/test_sync_notion.py`（離線測試，不連網，涵蓋文章與作品）。
+檔案：`.github/workflows/sync-notion.yml`（流程）、`tools/sync_notion.py`（腳本）、`tools/test_sync_notion.py`（離線測試，不連網，涵蓋文章、作品與現在在做的事）。
 
 **一次性設定（本人要做）**
 1. 到 https://www.notion.so/profile/integrations 建立「內部整合」，權限只勾「讀取內容」（唯讀），複製金鑰。
-2. 打開 Notion「部落格文章」資料庫，右上角 ⋯ → 連線（Connections）→ 加入剛建立的整合。沒分享給它的頁面它看不到。**「作品」資料庫也要做同樣的連線**（它是獨立的資料庫，不會跟著繼承）。
+2. 打開 Notion「部落格文章」資料庫，右上角 ⋯ → 連線（Connections）→ 加入剛建立的整合。沒分享給它的頁面它看不到。**「作品」資料庫、「現在在做的事」頁面也要做同樣的連線**（它們是獨立的，不會跟著繼承）。
 3. GitHub 儲存庫 → Settings → Secrets and variables → Actions → New repository secret，名稱填 `NOTION_TOKEN`，內容貼上金鑰。**金鑰只放這裡，不要貼到對話、檔案或儲存庫。**
 
 **每次使用**

@@ -14,12 +14,18 @@
 - 改成「草稿」（或刪掉）的作品，下次同步就會從網站拿掉，它的圖片也會一併清掉。
 - 作品資料庫讀不到時（例如還沒把整合加進資料庫），works.json 維持原樣，只在 Summary 提醒。
 
+「現在在做的事」的規則：
+- 讀 Notion「現在在做的事」這個頁面本身的內文（不是外層引用的那一份），每個有文字的區塊算一段，
+  第一段是大字、其餘是內文，寫進 tools/blog_config.json 的 now。內文有變才更新，更新日期＝Notion 最後編輯日（台北時間）。
+- 頁面讀不到或內文是空的（例如正在清掉重打）時，網站上維持原樣，只在 Summary 提醒。
+
 唯讀：這個腳本只讀 Notion，不會改 Notion 的任何內容。
 
 環境變數：
   NOTION_TOKEN            必填。Notion 內部整合的金鑰（放在 GitHub Secrets，不要寫進程式）
   NOTION_DATA_SOURCE_ID   選填。預設是「部落格文章」資料來源
   NOTION_WORKS_DATA_SOURCE_ID  選填。預設是「作品」資料來源
+  NOTION_NOW_PAGE_ID      選填。預設是「現在在做的事」頁面
   NOTION_VERSION          選填。預設 2025-09-03
   RESYNC                  選填。逗號分隔的文章 id，或 all
   SYNC_ROOT               選填。專案根目錄（測試用）
@@ -38,6 +44,7 @@ import time
 import hashlib
 import urllib.error
 import urllib.request
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(os.environ.get("SYNC_ROOT") or Path(__file__).resolve().parent.parent)
@@ -49,6 +56,9 @@ WORKS_IMG_DIR = ROOT / "portfolio" / "img"
 
 DATA_SOURCE = os.environ.get("NOTION_DATA_SOURCE_ID", "89785077-cd87-4fbd-b55a-53b0631df9a7")
 WORKS_DATA_SOURCE = os.environ.get("NOTION_WORKS_DATA_SOURCE_ID", "43db433a-787f-4682-8193-17920774bbed")
+NOW_PAGE = os.environ.get("NOTION_NOW_PAGE_ID", "3f1c9f2a-f247-8039-b8fa-d603ea44fd77")
+NOW_MAX_PARAS = 8
+TAIPEI = timezone(timedelta(hours=8))
 NOTION_VERSION = os.environ.get("NOTION_VERSION", "2025-09-03")
 
 P_TITLE, P_CATEGORY, P_STATUS, P_DATE = "標題", "分類", "狀態", "發布日期"
@@ -551,6 +561,68 @@ def sync_works(force):
     return added, updated, removed, problems, notices, len(pages)
 
 
+# ───────────────────────── 現在在做的事 ─────────────────────────
+
+def collect_now(block_id, out, times, unsupported):
+    """走訪頁面內文，每個有文字的區塊收成一段純文字（標題、粗體、清單都只取文字）。
+    同時記下每個區塊的最後編輯時間：內文放在同步區塊時，頁面本身的編輯時間不一定會跟著變。"""
+    for b in list_children(block_id):
+        t = b.get("type")
+        d = b.get(t) or {}
+        if b.get("last_edited_time"):
+            times.append(b["last_edited_time"])
+        if t == "unsupported":  # Notion API 讀不到的區塊（沒有文字可取）
+            unsupported.append(b.get("id"))
+        if t not in ("code", "child_page", "child_database"):
+            text = "".join(r.get("plain_text", "") for r in d.get("rich_text") or [])
+            text = re.sub(r"\s*\n\s*", " ", text).strip()
+            if text:
+                out.append(text)
+        if b.get("has_children") and t not in ("child_page", "child_database", "table"):
+            src = b["id"]
+            if t == "synced_block" and d.get("synced_from"):
+                src = d["synced_from"]["block_id"]
+            collect_now(src, out, times, unsupported)
+
+
+def taipei_date(iso):
+    dt = datetime.strptime(iso[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc)
+    return dt.astimezone(TAIPEI).strftime("%Y-%m-%d")
+
+
+def sync_now():
+    """把 Notion「現在在做的事」頁面內文寫進 blog_config.json 的 now。回傳 (結果文字, 問題或 None, 提醒或 None)。"""
+    cfg_raw = CFG_PATH.read_text(encoding="utf8")
+    cfg = json.loads(cfg_raw)
+    now = cfg.setdefault("now", {"title": "現在在做的事", "paragraphs": [], "updated": ""})
+    try:
+        pg = notion("GET", f"/pages/{NOW_PAGE}")
+        if pg.get("in_trash") or pg.get("archived"):
+            raise SyncError("頁面已被刪除")
+        paras, times, unsupported = [], [pg.get("last_edited_time", "")], []
+        collect_now(NOW_PAGE, paras, times, unsupported)
+    except SyncError as e:
+        return None, (f"「現在在做的事」讀取失敗，網站上維持原樣：{e}"
+                      "（請確認已在 Notion「現在在做的事」頁面的 ⋯ → 連線 加入這個整合）"), None
+    if unsupported:  # 寧可維持舊內容，也不要只顯示一半（例如標題讀不到，大字變成第二行）
+        return None, (f"「現在在做的事」頁面有 {len(unsupported)} 個 Notion 讀不到的區塊（常見原因：標題用了 H4），"
+                      "為免只顯示一半，網站上維持原樣。請把該行改成 H1～H3 或一般文字"), None
+    if not paras:
+        return None, "「現在在做的事」頁面目前是空的，網站上維持原樣（可能正在重打，打好後再同步一次即可）", None
+    warn = None
+    if len(paras) > NOW_MAX_PARAS:
+        warn = f"「現在在做的事」有 {len(paras)} 段，網站只取前 {NOW_MAX_PARAS} 段"
+        paras = paras[:NOW_MAX_PARAS]
+    if paras == now.get("paragraphs"):
+        return "沒有變動", None, warn
+    stamp = max([t for t in times if t] or [datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")])
+    now["paragraphs"] = paras
+    now["updated"] = taipei_date(stamp)
+    CFG_PATH.write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+    print(f"現在在做的事：已更新（{len(paras)} 段，更新日期 {now['updated']}）")
+    return "已更新", None, warn
+
+
 # ───────────────────────── 主流程 ─────────────────────────
 
 def dump_posts(posts):
@@ -660,12 +732,13 @@ def main():
         POSTS_PATH.write_text(new_text, encoding="utf8")
 
     w_added, w_updated, w_removed, w_problems, w_notices, w_pages = sync_works(force)
+    now_result = sync_now()
     write_summary(added, updated, problems, baselined, notices, len(pages),
-                  (w_added, w_updated, w_removed, w_problems, w_notices, w_pages))
-    return 1 if any("讀取失敗" in p for p in problems + w_problems) else 0
+                  (w_added, w_updated, w_removed, w_problems, w_notices, w_pages), now_result)
+    return 1 if any("讀取失敗" in p for p in problems + w_problems + [now_result[1] or ""]) else 0
 
 
-def write_summary(added, updated, problems, baselined, notices, n_pages, works=None):
+def write_summary(added, updated, problems, baselined, notices, n_pages, works=None, now=None):
     L = ["## Notion 同步結果", "", f"- 掃描 Notion 頁面：{n_pages} 筆",
          f"- 新增文章：{len(added)} 篇", f"- 更新文章：{len(updated)} 篇"]
     for title, items in (("新增", added), ("更新", updated)):
@@ -689,6 +762,12 @@ def write_summary(added, updated, problems, baselined, notices, n_pages, works=N
             L += ["", "作品需要處理："] + [f"- {p}" for p in wp]
         if not (wa or wu or wr or wp):
             L += ["", "作品沒有變動。"]
+    if now:
+        result, problem, warn = now
+        L += ["", "### 現在在做的事", ""]
+        L.append(f"- {result}" if result else f"- 需要處理：{problem}")
+        if warn:
+            L.append(f"- 提醒：{warn}")
     if not (added or updated or problems) and not works:
         L += ["", "沒有需要同步的新內容。"]
     text = "\n".join(L) + "\n"

@@ -94,6 +94,7 @@ class Fake:
     def __init__(self):
         self.pages, self.children, self.downloads = [], {}, []
         self.works_pages, self.works_error = [], False
+        self.now_page, self.now_error = None, False
 
     def notion(self, method, path, body=None):
         if method == "POST" and "/query" in path and sn.WORKS_DATA_SOURCE in path:
@@ -105,6 +106,10 @@ class Fake:
             if (body or {}).get("start_cursor"):
                 return {"results": rest, "has_more": False}
             return {"results": first, "has_more": bool(rest), "next_cursor": "c2"}
+        if method == "GET" and path.startswith("/pages/"):
+            if self.now_error:
+                raise sn.SyncError("Notion API 回應 404（GET /pages/x）")
+            return self.now_page
         if method == "GET" and path.startswith("/blocks/"):
             bid = path.split("/")[2]
             return {"results": self.children.get(bid, []), "has_more": False}
@@ -160,7 +165,20 @@ fake.children["b19"] = [block("col", "column", children=True)]
 fake.children["col"] = [block("cp", "paragraph", [rt("欄內文字")])]
 fake.children[SYN] = [block("sp", "paragraph", [rt("同步區塊文字")])]
 
+# 「現在在做的事」頁面：內文放在同步區塊裡（跟真實頁面一樣），標題是 heading_4、第二行是粗體
+NOW_ID = sn.NOW_PAGE
+fake.now_page = {"id": NOW_ID, "last_edited_time": "2026-10-15T05:59:00.083Z"}
+fake.children[NOW_ID] = [
+    {**block("nsb", "synced_block", children=True, synced_from=None), "last_edited_time": "2026-10-15T05:59:00.000Z"},
+    block("nes", "paragraph", []),
+]
+fake.children["nsb"] = [
+    block("nh", "heading_4", [rt("簡報結束啦，專案概念呈現太醜又太難聽被嫌了wwww")]),
+    block("np", "paragraph", [rt("接下來就是團專跟個人專頁的整理", bold=True)]),
+]
+
 posts0 = json.loads((TMP / "tools/posts.json").read_text(encoding="utf8"))
+NEW_ID = max(p["id"] for p in posts0) + 1  # 新文章會拿到的 id（隨網站文章增加）
 p706 = next(p for p in posts0 if p["id"] == 706)
 p701 = next(p for p in posts0 if p["id"] == 701)
 p687 = next(p for p in posts0 if p["id"] == 687)  # 舊文，沒有 notion 欄位
@@ -196,9 +214,9 @@ check.failed = 0
 # ───────── 第 1 次：新增 ─────────
 print("== run 1")
 code, posts = run()
-new = [p for p in posts if p["id"] == 707]
+new = [p for p in posts if p["id"] == NEW_ID]
 check(code == 0, "exit code 0")
-check(len(posts) == len(posts0) + 1 and len(new) == 1, "只新增 1 篇（id 707）")
+check(len(posts) == len(posts0) + 1 and len(new) == 1, "只新增 1 篇（id NEW_ID）")
 e = new[0]
 md = e["md"]
 print(md)
@@ -212,8 +230,8 @@ check("`code_x`" in md and "<br>換行\\*星號\\*\\_底線\\_" in md, "行內�
 check("\n<empty-block/>\n" in md, "空段落 → <empty-block/>")
 check("- 項目一\n- 子項目" in md, "子項目攤平成同層清單")
 check("- ☑ 待辦" in md and "> 引言" in md and "💡 提醒" in md and "\n---\n" in md, "to_do／quote／callout／divider")
-check("[圖:p707-" in md and "|圖說含 與 符號]" in md, "圖說的 ] 與 | 被清掉")
-imgs = sorted((TMP / "blog/img").glob("p707-*"))
+check(f"[圖:p{NEW_ID}-" in md and "|圖說含 與 符號]" in md, "圖說的 ] 與 | 被清掉")
+imgs = sorted((TMP / "blog/img").glob(f"p{NEW_ID}-*"))
 names = [f.name for f in imgs]
 check(len(imgs) == 3, f"產生 3 個圖檔（jpg、png、gif）：{names}")
 jpg = next(f for f in imgs if f.suffix == ".jpg")
@@ -254,12 +272,12 @@ fake.children[A] = [block("n1", "paragraph", [rt("改過的內文")]),
                     block("n2", "image", type="file", file={"url": URL_JPG_SAME_FILE_NEW_SIG}, caption=[])]
 fake.downloads.clear()
 code, posts = run()
-e = next(p for p in posts if p["id"] == 707)
-left = sorted(f.name for f in (TMP / "blog/img").glob("p707-*"))
+e = next(p for p in posts if p["id"] == NEW_ID)
+left = sorted(f.name for f in (TMP / "blog/img").glob(f"p{NEW_ID}-*"))
 check(e["title"] == "測試新文章（改標題）" and e["md"].startswith("改過的內文"), "標題與內文已更新")
 check(len(left) == 1 and left[0] in e["md"], f"同一張圖換了簽名網址：沿用同檔名，其餘舊圖已清掉：{left}")
 check(not fake.downloads, "同一張圖（簽名不同）沒有重新下載")
-check(e["id"] == 707 and len(posts) == len(posts0) + 1, "id 不變、沒有重複新增")
+check(e["id"] == NEW_ID and len(posts) == len(posts0) + 1, "id 不變、沒有重複新增")
 
 # ───────── 第 4 次：RESYNC 強制 ─────────
 print("== run 4 (RESYNC=706)")
@@ -275,8 +293,8 @@ print("== build")
 r = subprocess.run([sys.executable, "-I", str(TMP / "tools/build_blog.py")], capture_output=True, text=True, cwd=TMP)
 print(r.stdout.strip(), r.stderr.strip()[:300])
 check(r.returncode == 0 and "WARNING" not in r.stdout, "建置成功、沒有 WARNING（沒有找不到的圖）")
-html = (TMP / "blog/posts/707.html").read_text(encoding="utf8")
-check('<figure><img src="../img/p707-' in html, "文章頁有 <figure><img>")
+html = (TMP / f"blog/posts/{NEW_ID}.html").read_text(encoding="utf8")
+check(f'<figure><img src="../img/p{NEW_ID}-' in html, "文章頁有 <figure><img>")
 check(0 < html.count("<figure>") and "&lt;strong&gt;" not in html, "文章頁沒有把標籤當文字")
 alltxt = (TMP / "blog/all.html").read_text(encoding="utf8")
 check("&lt;strong&gt;" not in alltxt and "&lt;br&gt;" not in alltxt, "列表摘要沒有露出 HTML 標籤")
@@ -398,6 +416,96 @@ check(works == [], "全部改成草稿 → 全部下架")
 r = subprocess.run([sys.executable, "-I", str(TMP / "tools/build_works.py")], capture_output=True, text=True, cwd=TMP)
 idx = (TMP / "portfolio/index.html").read_text(encoding="utf8")
 check("作品整理中" in idx and "second-work.html" not in idx, "沒有作品時顯示「作品整理中」")
+
+# ───────────────────────── 現在在做的事 ─────────────────────────
+print("== now")
+
+
+def now_cfg():
+    return json.loads((TMP / "tools/blog_config.json").read_text(encoding="utf8"))["now"]
+
+
+def now_run():
+    os.environ["RESYNC"] = ""
+    importlib.reload(sn)
+    sn.notion, sn.http_get = fake.notion, fake.http_get
+    return sn.sync_now()
+
+
+cfg_before = json.loads((TMP / "tools/blog_config.json").read_text(encoding="utf8"))
+n = now_cfg()
+check(n["paragraphs"] == ["簡報結束啦，專案概念呈現太醜又太難聽被嫌了wwww", "接下來就是團專跟個人專頁的整理"],
+      f"內文（同步區塊裡的 H4＋粗體）已寫進 now：{n['paragraphs']}")
+check(n["updated"] == "2026-10-15" and n["title"] == "現在在做的事", f"更新日期用 Notion 最後編輯日（台北時間）：{n['updated']}")
+check(json.dumps(cfg_before, ensure_ascii=False, indent=2) + "\n" == (TMP / "tools/blog_config.json").read_text(encoding="utf8"),
+      "blog_config.json 格式不變（其他設定沒被動到）")
+zones_now = cfg_before["zones"]
+check(len(zones_now) == 12 and cfg_before["groups"] == ["工作與創作", "興趣與生活"], "專區與分組設定原封不動")
+
+before = (TMP / "tools/blog_config.json").read_bytes()
+res = now_run()
+check(res[0] == "沒有變動" and (TMP / "tools/blog_config.json").read_bytes() == before, "內文沒變：設定檔逐位元相同、日期不動")
+
+# 只改了日期相關的編輯時間、文字沒變 → 不動
+fake.now_page["last_edited_time"] = "2026-10-20T01:00:00.000Z"
+res = now_run()
+check(res[0] == "沒有變動" and now_cfg()["updated"] == "2026-10-15", "只是編輯時間變了、文字沒變：日期不更新")
+
+# 外層清掉重打：新內文＋跨日（UTC 16:30 ＝ 台北隔天 00:30）
+fake.children["nsb"] = [block("nh2", "heading_2", [rt("開始整理團專")]),
+                        block("np2", "bulleted_list_item", [rt("整理個人專頁"), rt("\n第二行", bold=True)], children=True),
+                        block("code1", "code", [rt("print('不要')")]),
+                        block("emp", "paragraph", [])]
+fake.children["np2"] = [{**block("np2c", "paragraph", [rt("子項目")]), "last_edited_time": "2026-10-15T16:30:00.000Z"}]
+fake.now_page["last_edited_time"] = "2026-10-15T10:00:00.000Z"
+res = now_run()
+n = now_cfg()
+check(res[0] == "已更新" and n["paragraphs"] == ["開始整理團專", "整理個人專頁 第二行", "子項目"],
+      f"新內文：空段落與程式碼略過、換行併成一行、子項目算一段：{n['paragraphs']}")
+check(n["updated"] == "2026-10-16", f"取頁面與區塊中最晚的編輯時間，並換算成台北日期：{n['updated']}")
+
+# 外層正在重打：頁面是空的 → 網站維持原樣
+fake.children["nsb"] = []
+before = (TMP / "tools/blog_config.json").read_bytes()
+res = now_run()
+check(res[0] is None and res[1] and "空的" in res[1] and "讀取失敗" not in res[1], "內文是空的：只提醒，不當成失敗")
+check((TMP / "tools/blog_config.json").read_bytes() == before, "內文是空的：網站上的內容維持原樣")
+
+# 讀不到（整合還沒連線到這個頁面）→ 維持原樣＋回報失敗
+fake.now_error = True
+res = now_run()
+check(res[0] is None and "讀取失敗" in res[1] and "連線" in res[1], "頁面讀不到：訊息說明要加連線")
+check((TMP / "tools/blog_config.json").read_bytes() == before, "頁面讀不到：網站上的內容維持原樣")
+code, _ = run()
+check(code == 1, "頁面讀不到：整個同步回報失敗，讓你看得到")
+fake.now_error = False
+
+# 有 Notion API 讀不到的區塊（例如 H4）→ 寧可維持原樣，不要只顯示一半
+fake.children["nsb"] = [{"id": "unsup", "type": "unsupported", "has_children": False, "unsupported": {}},
+                        block("np4", "paragraph", [rt("只剩這一行")])]
+before = (TMP / "tools/blog_config.json").read_bytes()
+res = now_run()
+check(res[0] is None and "H4" in res[1] and (TMP / "tools/blog_config.json").read_bytes() == before,
+      "有讀不到的區塊：網站維持原樣並說明原因")
+check("讀取失敗" not in res[1], "讀不到區塊：提醒但不讓整個同步顯示失敗")
+
+# 太多段 → 只取前 8 段並提醒
+fake.children["nsb"] = [block(f"m{i}", "paragraph", [rt(f"第{i}段")]) for i in range(1, 12)]
+res = now_run()
+check(res[0] == "已更新" and len(now_cfg()["paragraphs"]) == 8 and res[2] and "11" in res[2], "超過 8 段只取前 8 段，並提醒")
+
+# 頁面被刪掉
+fake.now_page["in_trash"] = True
+res = now_run()
+check(res[0] is None and "讀取失敗" in res[1], "頁面被刪掉：維持原樣並回報")
+fake.now_page["in_trash"] = False
+
+# 建置：首頁大區塊吃新內容
+fake.children["nsb"] = [block("nh3", "heading_4", [rt("測試 <b>標題</b>")]), block("np3", "paragraph", [rt("內文")])]
+code, _ = run()
+r = subprocess.run([sys.executable, "-I", str(TMP / "tools/build_blog.py")], capture_output=True, text=True, cwd=TMP)
+home = (TMP / "blog/index.html").read_text(encoding="utf8")
+check(r.returncode == 0 and "測試 &lt;b&gt;標題&lt;/b&gt;" in home and "更新於 2026-10-15" in home, "首頁「現在在做的事」顯示新內容（HTML 已跳脫）")
 
 shutil.rmtree(TMP, ignore_errors=True)
 print("\n失敗項目：", check.failed)

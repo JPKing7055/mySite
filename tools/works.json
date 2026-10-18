@@ -61,5 +61,23 @@
   "md": "## 概念\n把外語學習放進街區散步：角色在地圖上移動，靠近地標時出現隨機的外語事件，完成事件可以獲得獎勵並累積分數。\n[圖:p688-9e17673e.png|Gemini Canvas 製作的模擬地圖原型：靠近地標會出現外語事件]\n[圖:p688-59525e3a.png|閱讀事件：英文短文與繁體中文對照，完成可得分]\n## 目前進度\n目前處於<strong>概念驗證與開發規劃階段，尚未開始正式開發</strong>。\n- <strong>概念原型</strong>：用 Gemini Canvas 做出模擬地圖版本，包含角色移動、隨機事件、閱讀、填空與情境選擇題，以及完成獎勵與累積分數。已閱讀原始碼，尚未實際測試驗收。\n- <strong>技術方向</strong>：先做手機網頁；用 Google Maps 顯示地圖，搭配自有地標資料與預先生成的 AI 題庫，減少即時查詢與出題成本。\n- <strong>開發規劃</strong>：涵蓋真實定位、地標綁定、事件刷新、AI 題庫、進度保存與戶外測試。\n## 尚待決定與尚未實作\n- 尚待決定：首發測試區域、候選地標、第一版平台、學習程度與預算。\n- 尚未實作：Google Maps 與 GPS 接入、地標資料庫、AI 出題串接、後端與正式部署。\n## 下一步\n先確定一個測試區域，篩選 8 到 12 個地標，再定案第一版規格。\n## 想一起做的夥伴\n這個規模我一個人可能做不完，有考慮把它做成團隊專題，也想聽聽其他人的想法。",
   "notion": "3f8c9f2a-f247-8176-81c2-e3f52ff67ab8",
   "notion_edited": "2026-10-16T07:24:00.000Z"
+ },
+ {
+  "slug": "video-clipstitch",
+  "title": "影片轉 GIF 工具",
+  "summary": "在瀏覽器本機處理的影片剪輯小工具：從影片挑出多段片段，輸出成 GIF 動畫或 MP4。用 Google AI Studio 開發，已上線可直接使用。",
+  "progress": "已上線",
+  "tags": [
+   "Google AI Studio"
+  ],
+  "order": 4,
+  "live": "https://jpking7055.github.io/video-clipstitch/",
+  "github": "https://github.com/JPKing7055/video-clipstitch",
+  "related": [
+   "3fbc9f2a-f247-8073-b911-cf4543bd6611"
+  ],
+  "md": "## 為什麼做\n手邊有影片檔需要壓縮，又想把片段做成 GIF，所以用 Google AI Studio 做了這個小工具：從影片裡挑出想要的片段，輸出成 GIF 動畫或 MP4。\n## 功能\n- 從本機影片選取多段片段範圍\n- 可輸出 GIF 動畫，也能輸出 MP4\n- 純前端，在瀏覽器本機處理，影片不需要上傳到任何伺服器\n## 開發方式\n用 Google AI Studio 的 Build 模式開發，再透過 GitHub 同步發佈，並以 GitHub Pages 提供網頁版。程式碼公開，歡迎使用或修改。\n[圖:w-video-clipstitch-51b82941.png]\n[圖:w-video-clipstitch-1d557dd8.png]",
+  "notion": "3fdc9f2a-f247-8182-bcb2-cf20232ed5c9",
+  "notion_edited": "2026-10-18T14:56:00.000Z"
  }
 ]

@@ -47,6 +47,16 @@ def badge(w):
     return f'<span class="inline-block text-xs px-2.5 py-1 rounded-full border {cls}">{esc(w["progress"])}</span>' if w.get("progress") else ""
 
 
+def period(w):
+    """專案期間：2026/10、2026/10 ～ 2026/11；沒填就不顯示。"""
+    fmt = lambda d: d[:7].replace("-", "/")
+    s, e = w.get("start") or "", w.get("end") or ""
+    if not s:
+        return ""
+    text = fmt(s) if not e or fmt(e) == fmt(s) else f"{fmt(s)} ～ {fmt(e)}"
+    return f'<span class="text-xs text-slate-500 dark:text-slate-400"><i class="far fa-calendar mr-1"></i>{esc(text)}</span>'
+
+
 def tags(w):
     return "".join(f'<span class="{TAG}">{esc(t)}</span>' for t in w.get("tags", []))
 
@@ -81,7 +91,7 @@ def card(w):
         'dark:border-[rgba(255,255,255,0.1)] shadow-lg shadow-slate-200/50 dark:shadow-none flex flex-col">'
         f'<a href="{esc(w["slug"])}.html" aria-label="{esc(w["title"])}">{thumb}</a>'
         '<div class="p-6 flex flex-col flex-1">'
-        f'<div class="mb-3">{badge(w)}</div>'
+        f'<div class="mb-3 flex flex-wrap items-center gap-2">{badge(w)}{period(w)}</div>'
         f'<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2"><a href="{esc(w["slug"])}.html" class="hover:text-sky-500 transition-colors">{esc(w["title"])}</a></h3>'
         f'<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">{esc(w["summary"])}</p>'
         f'<div class="flex flex-wrap gap-1.5 mb-4">{tags(w)}</div>'
@@ -122,7 +132,7 @@ def related_posts(w):
 def build_case(w):
     p = {"id": w["slug"], "title": w["title"], "date": "2026-01-01", "md": w["md"]}  # date 只用來決定換行方式
     body_html = B.render_body(p, img_dir=IMG, img_src="img/", where="portfolio/img")
-    meta = [x for x in (badge(w), tags(w)) if x]
+    meta = [x for x in (badge(w), period(w), tags(w)) if x]
     ln = links(w)
     rel = related_posts(w)
     rel_html = ""

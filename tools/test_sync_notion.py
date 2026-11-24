@@ -304,7 +304,7 @@ print("== works")
 
 
 def wpage(pid, title, show, slug, summary="一句話說明", progress="開發中", order=1, tags=(), related=(),
-          live="", github="", edited="2026-10-13T01:00:00.000Z"):
+          live="", github="", edited="2026-10-13T01:00:00.000Z", period=None):
     return {"id": pid, "last_edited_time": edited, "properties": {
         "作品名稱": {"title": [{"plain_text": title}]},
         "一句話說明": {"rich_text": [{"plain_text": summary}] if summary else []},
@@ -314,7 +314,8 @@ def wpage(pid, title, show, slug, summary="一句話說明", progress="開發中
         "技術與工具": {"multi_select": [{"name": t} for t in tags]},
         "顯示順序": {"number": order},
         "成品連結": {"url": live or None}, "GitHub 連結": {"url": github or None},
-        "相關文章": {"relation": [{"id": r} for r in related]}}}
+        "相關文章": {"relation": [{"id": r} for r in related]},
+        "專案期間": {"date": {"start": period[0], "end": period[1]} if period else None}}}
 
 
 def wrun(resync=""):
@@ -341,7 +342,7 @@ for w in (W4, W5, W6):
 p705 = next(p for p in posts0 if p["id"] == 705)
 fake.works_pages = [
     wpage(W2, "作品二", "已發布", "second-work", order=2, tags=["Gemini", "LINE Bot"], live="https://example.com/app", github="javascript:alert(1)"),
-    wpage(W1, "作品一", "待發布", "first-work", order=1, progress="測試中", related=[p705["notion"], "ffffffff-0000-0000-0000-00000000dead"]),
+    wpage(W1, "作品一", "待發布", "first-work", order=1, progress="測試中", period=("2026-10-05", "2026-11-20"), related=[p705["notion"], "ffffffff-0000-0000-0000-00000000dead"]),
     wpage(W3, "草稿作品", "草稿", "draft-work"),
     wpage(W4, "代稱有問題", "待發布", "Bad Slug!"),
     wpage(W5, "沒有說明", "待發布", "no-summary", summary=""),
@@ -351,6 +352,7 @@ code, works = wrun()
 check(code == 0, "exit code 0")
 check([w["slug"] for w in works] == ["first-work", "second-work"], f"只有待發布／已發布的合格作品，依顯示順序排列：{[w['slug'] for w in (works or [])]}")
 w1, w2 = works
+check(w1["start"] == "2026-10-05" and w1["end"] == "2026-11-20" and w2["start"] == "" and w2["end"] == "", "專案期間：有填就記下，沒填是空的")
 check(w1["progress"] == "測試中" and w2["tags"] == ["Gemini", "LINE Bot"], "專案進度與標籤")
 check(w2["live"] == "https://example.com/app" and w2["github"] == "", "成品連結保留 https；javascript: 這類網址被丟掉")
 check(w1["notion"] == W1 and w1["notion_edited"].startswith("2026-10-13"), "記下 notion 與 notion_edited")
@@ -376,6 +378,7 @@ check(r.returncode == 0, "build_works 成功")
 idx = (TMP / "portfolio/index.html").read_text(encoding="utf8")
 check("first-work.html" in idx and "second-work.html" in idx and "作品整理中" not in idx, "首頁有兩張作品卡片、沒有「整理中」")
 check(idx.index("作品一") < idx.index("作品二"), "卡片依顯示順序")
+check(idx.count("fa-calendar") == 1 and "2026/10 ～ 2026/11" in idx, "有填期間的作品卡片顯示日期，沒填的不顯示")
 check("WORKS:START" in idx and "WORKS:END" in idx, "標記還在（下次可以再重建）")
 check('href="https://example.com/app"' in idx and "javascript:" not in idx, "成品連結出現在卡片上")
 case = (TMP / "portfolio/first-work.html").read_text(encoding="utf8")

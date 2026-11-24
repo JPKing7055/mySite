@@ -68,6 +68,7 @@ S_PUBLISH, S_LIVE = "待發布", "已發布"
 W_TITLE, W_SUMMARY, W_PROGRESS, W_SHOW = "作品名稱", "一句話說明", "專案進度", "網站顯示"
 W_SLUG, W_TAGS, W_ORDER = "網址代稱", "技術與工具", "顯示順序"
 W_LIVE, W_GITHUB, W_RELATED = "成品連結", "GitHub 連結", "相關文章"
+W_PERIOD = "專案期間"  # 日期欄位，可只填開始日，或勾「結束日期」填成一段期間
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9\-]{0,59}$")
 RESERVED_SLUGS = {"index", "img"}
 
@@ -173,6 +174,12 @@ def prop_date(page, name):
     p = (page.get("properties") or {}).get(name) or {}
     d = p.get("date")
     return d["start"][:10] if d and d.get("start") else None
+
+
+def prop_date_range(page, name):
+    p = (page.get("properties") or {}).get(name) or {}
+    d = p.get("date") or {}
+    return (d.get("start") or "")[:10], (d.get("end") or "")[:10]
 
 
 def prop_text(page, name):
@@ -540,6 +547,7 @@ def sync_works(force):
                  "tags": prop_multi(page, W_TAGS), "order": prop_number(page, W_ORDER),
                  "live": https_link(prop_url(page, W_LIVE)), "github": https_link(prop_url(page, W_GITHUB)),
                  "related": prop_relation_ids(page, W_RELATED), "md": md,
+                 "start": prop_date_range(page, W_PERIOD)[0], "end": prop_date_range(page, W_PERIOD)[1],
                  "notion": page["id"], "notion_edited": edited}
             print(f"作品：{title}（{slug}，圖片 {len(md_images(md))} 張）")
         works.append(w)
